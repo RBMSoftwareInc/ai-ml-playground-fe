@@ -31,6 +31,7 @@ export default function GenericForm({
                 name={field.name}
                 onChange={handleChange}
                 defaultValue=""
+                sx={{ paddingRight: '100px' }}
               >
                 {field.options.map(opt => (
                   <MenuItem value={opt} key={opt}>{opt}</MenuItem>

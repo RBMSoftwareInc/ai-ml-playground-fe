@@ -1,8 +1,10 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material';
+import { AppBar, Box, Button, ToggleButton, Toolbar, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
+import ModeToggle from './ModeToggle';
+import Link from "next/link";
 
 const phrases = [
   '<RBM Soft e-Commerce AI/ML Arena>'
@@ -108,6 +110,12 @@ export default function Header() {
       </Box>
 
 
+      // Inside your AppBar or header
+      <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Typography variant="h6" noWrap>🛒 E-Com AI Playground</Typography>
+        <ModeToggle />
+      </Toolbar>
+    
       {/* Cursor blink effect */}
       <style jsx global>{`
         @keyframes blink {
@@ -117,5 +125,7 @@ export default function Header() {
         }
       `}</style>
     </>
+
+    
   );
 }
