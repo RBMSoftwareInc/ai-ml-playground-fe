@@ -10,7 +10,7 @@ const roboto = Roboto({
 })
 export const metadata = {
   title: 'RBM AI Playground',
-  description: 'Explore real-time eCommerce AI demos',
+  description: 'Enterprise AI/ML solutions across industries - E-commerce, Healthcare, Fintech, and more',
 }
 
 export default function RootLayout({
