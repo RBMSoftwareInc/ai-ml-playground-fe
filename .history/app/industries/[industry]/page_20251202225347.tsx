@@ -128,13 +128,13 @@ const industriesData: Record<string, IndustryData> = {
     tagline: 'Transforming patient care with intelligent solutions',
     description: '8 AI use cases for modern healthcare delivery',
     icon: <LocalHospital sx={{ fontSize: 44 }} />,
-    primaryColor: '#6b7280',
-    secondaryColor: '#4b5563',
+    primaryColor: '#22c55e',
+    secondaryColor: '#16a34a',
     categories: [
       {
         title: 'Clinical Intelligence',
         icon: <MonitorHeart />,
-        color: '#6b7280',
+        color: '#22c55e',
         description: 'AI-powered clinical decision support',
         useCases: [
           {
@@ -170,7 +170,7 @@ const industriesData: Record<string, IndustryData> = {
       {
         title: 'Drug & Research',
         icon: <Medication />,
-        color: '#6b7280',
+        color: '#3b82f6',
         description: 'Accelerate pharmaceutical research',
         useCases: [
           {
@@ -206,7 +206,7 @@ const industriesData: Record<string, IndustryData> = {
       {
         title: 'Operations',
         icon: <Assessment />,
-        color: '#ef4444',
+        color: '#f97316',
         description: 'Optimize healthcare operations',
         useCases: [
           {
@@ -247,13 +247,13 @@ const industriesData: Record<string, IndustryData> = {
     tagline: 'Intelligent solutions for modern travel',
     description: '8 AI use cases for travel and tourism',
     icon: <Flight sx={{ fontSize: 44 }} />,
-    primaryColor: '#6b7280',
-    secondaryColor: '#4b5563',
+    primaryColor: '#3b82f6',
+    secondaryColor: '#2563eb',
     categories: [
       {
         title: 'Pricing & Revenue',
         icon: <TrendingUp />,
-        color: '#6b7280',
+        color: '#3b82f6',
         description: 'Maximize revenue with dynamic pricing',
         useCases: [
           {
@@ -289,7 +289,7 @@ const industriesData: Record<string, IndustryData> = {
       {
         title: 'Personalization',
         icon: <Recommend />,
-        color: '#6b7280',
+        color: '#a855f7',
         description: 'Tailored travel experiences',
         useCases: [
           {
@@ -325,7 +325,7 @@ const industriesData: Record<string, IndustryData> = {
       {
         title: 'Operations',
         icon: <FlightTakeoff />,
-        color: '#ef4444',
+        color: '#f97316',
         description: 'Optimize travel operations',
         useCases: [
           {
@@ -366,13 +366,13 @@ const industriesData: Record<string, IndustryData> = {
     tagline: 'Intelligent financial services',
     description: '8 AI use cases for financial technology',
     icon: <AccountBalance sx={{ fontSize: 44 }} />,
-    primaryColor: '#6b7280',
-    secondaryColor: '#4b5563',
+    primaryColor: '#a855f7',
+    secondaryColor: '#9333ea',
     categories: [
       {
         title: 'Risk & Compliance',
         icon: <Shield />,
-        color: '#6b7280',
+        color: '#a855f7',
         description: 'Manage risk with AI precision',
         useCases: [
           {
@@ -408,7 +408,7 @@ const industriesData: Record<string, IndustryData> = {
       {
         title: 'Trading & Markets',
         icon: <TrendingUp />,
-        color: '#6b7280',
+        color: '#22c55e',
         description: 'AI-powered trading insights',
         useCases: [
           {
@@ -444,7 +444,7 @@ const industriesData: Record<string, IndustryData> = {
       {
         title: 'Customer Services',
         icon: <AccountBalanceWallet />,
-        color: '#ef4444',
+        color: '#f97316',
         description: 'Enhance financial customer experience',
         useCases: [
           {
@@ -485,13 +485,13 @@ const industriesData: Record<string, IndustryData> = {
     tagline: 'Smart solutions for hospitality excellence',
     description: '8 AI use cases for restaurants and hospitality',
     icon: <Restaurant sx={{ fontSize: 44 }} />,
-    primaryColor: '#ef4444',
-    secondaryColor: '#dc2626',
+    primaryColor: '#f97316',
+    secondaryColor: '#ea580c',
     categories: [
       {
         title: 'Menu & Kitchen',
         icon: <MenuBook />,
-        color: '#ef4444',
+        color: '#f97316',
         description: 'Optimize menu and kitchen operations',
         useCases: [
           {
@@ -527,7 +527,7 @@ const industriesData: Record<string, IndustryData> = {
       {
         title: 'Operations',
         icon: <Groups />,
-        color: '#6b7280',
+        color: '#22c55e',
         description: 'Streamline restaurant operations',
         useCases: [
           {
@@ -563,7 +563,7 @@ const industriesData: Record<string, IndustryData> = {
       {
         title: 'Customer Experience',
         icon: <StarRate />,
-        color: '#ef4444',
+        color: '#ec4899',
         description: 'Enhance guest satisfaction',
         useCases: [
           {
@@ -604,13 +604,13 @@ const industriesData: Record<string, IndustryData> = {
     tagline: 'AI-powered media and entertainment',
     description: '8 AI use cases for media and entertainment',
     icon: <Movie sx={{ fontSize: 44 }} />,
-    primaryColor: '#ef4444',
-    secondaryColor: '#dc2626',
+    primaryColor: '#ec4899',
+    secondaryColor: '#db2777',
     categories: [
       {
         title: 'Content',
         icon: <Theaters />,
-        color: '#ef4444',
+        color: '#ec4899',
         description: 'Intelligent content solutions',
         useCases: [
           {
@@ -646,7 +646,7 @@ const industriesData: Record<string, IndustryData> = {
       {
         title: 'Audience',
         icon: <LiveTv />,
-        color: '#6b7280',
+        color: '#3b82f6',
         description: 'Understand and grow audiences',
         useCases: [
           {
@@ -682,7 +682,7 @@ const industriesData: Record<string, IndustryData> = {
       {
         title: 'Monetization',
         icon: <Campaign />,
-        color: '#ef4444',
+        color: '#f97316',
         description: 'Maximize revenue potential',
         useCases: [
           {
@@ -723,13 +723,13 @@ const industriesData: Record<string, IndustryData> = {
     tagline: 'Industry 4.0 intelligent manufacturing',
     description: '8 AI use cases for smart manufacturing',
     icon: <Factory sx={{ fontSize: 44 }} />,
-    primaryColor: '#6b7280',
-    secondaryColor: '#4b5563',
+    primaryColor: '#64748b',
+    secondaryColor: '#475569',
     categories: [
       {
         title: 'Equipment',
         icon: <Settings />,
-        color: '#6b7280',
+        color: '#64748b',
         description: 'Optimize equipment performance',
         useCases: [
           {
@@ -765,7 +765,7 @@ const industriesData: Record<string, IndustryData> = {
       {
         title: 'Quality',
         icon: <PrecisionManufacturing />,
-        color: '#6b7280',
+        color: '#22c55e',
         description: 'Ensure product quality',
         useCases: [
           {
@@ -801,7 +801,7 @@ const industriesData: Record<string, IndustryData> = {
       {
         title: 'Supply Chain',
         icon: <LocalShipping />,
-        color: '#ef4444',
+        color: '#f97316',
         description: 'Optimize supply chain operations',
         useCases: [
           {
@@ -842,13 +842,13 @@ const industriesData: Record<string, IndustryData> = {
     tagline: 'Intelligent property solutions',
     description: '8 AI use cases for real estate and construction',
     icon: <Apartment sx={{ fontSize: 44 }} />,
-    primaryColor: '#6b7280',
-    secondaryColor: '#4b5563',
+    primaryColor: '#78716c',
+    secondaryColor: '#57534e',
     categories: [
       {
         title: 'Valuation',
         icon: <House />,
-        color: '#6b7280',
+        color: '#78716c',
         description: 'Accurate property valuation',
         useCases: [
           {
@@ -884,7 +884,7 @@ const industriesData: Record<string, IndustryData> = {
       {
         title: 'Investment',
         icon: <LocationCity />,
-        color: '#6b7280',
+        color: '#22c55e',
         description: 'Smart investment decisions',
         useCases: [
           {
@@ -920,7 +920,7 @@ const industriesData: Record<string, IndustryData> = {
       {
         title: 'Construction',
         icon: <Construction />,
-        color: '#ef4444',
+        color: '#f97316',
         description: 'Optimize construction projects',
         useCases: [
           {
@@ -961,13 +961,13 @@ const industriesData: Record<string, IndustryData> = {
     tagline: 'In-store and omnichannel retail intelligence',
     description: '8 AI use cases for modern retail',
     icon: <Store sx={{ fontSize: 44 }} />,
-    primaryColor: '#6b7280',
-    secondaryColor: '#4b5563',
+    primaryColor: '#06b6d4',
+    secondaryColor: '#0891b2',
     categories: [
       {
         title: 'In-Store',
         icon: <Storefront />,
-        color: '#6b7280',
+        color: '#06b6d4',
         description: 'Transform the in-store experience',
         useCases: [
           {
@@ -1003,7 +1003,7 @@ const industriesData: Record<string, IndustryData> = {
       {
         title: 'Operations',
         icon: <PointOfSale />,
-        color: '#6b7280',
+        color: '#22c55e',
         description: 'Optimize retail operations',
         useCases: [
           {
@@ -1039,7 +1039,7 @@ const industriesData: Record<string, IndustryData> = {
       {
         title: 'Customer',
         icon: <Loyalty />,
-        color: '#ef4444',
+        color: '#ec4899',
         description: 'Enhance customer relationships',
         useCases: [
           {
@@ -1096,7 +1096,7 @@ export default function IndustryPage() {
 
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
   const [selectedUseCase, setSelectedUseCase] = useState<UseCase | null>(null);
-  const [selectedCategoryColor, setSelectedCategoryColor] = useState<string>('#6b7280');
+  const [selectedCategoryColor, setSelectedCategoryColor] = useState<string>('#3b82f6');
   const [modalOpen, setModalOpen] = useState(false);
 
   // Redirect to specific e-commerce page
@@ -1118,6 +1118,12 @@ export default function IndustryPage() {
     setModalOpen(true);
   };
 
+  const handleLaunch = (route: string) => {
+    setModalOpen(false);
+    if (route !== '#') {
+      router.push(route);
+    }
+  };
 
   return (
     <Box
@@ -1171,8 +1177,8 @@ export default function IndustryPage() {
         }}
       />
 
-      {/* Header */}
       <Container maxWidth="xl" sx={{ position: 'relative', zIndex: 1 }}>
+        {/* Header */}
         <Header
           variant="simple"
           title={industry.name}
@@ -1181,9 +1187,7 @@ export default function IndustryPage() {
           backUrl="/"
           titleColor={`linear-gradient(135deg, ${industry.primaryColor} 0%, ${industry.secondaryColor} 100%)`}
         />
-      </Container>
 
-      <Container maxWidth="xl" sx={{ position: 'relative', zIndex: 1, flex: 1, display: 'flex', flexDirection: 'column' }}>
           {/* Info banner */}
           <Paper
             sx={{
@@ -1357,14 +1361,9 @@ export default function IndustryPage() {
             ))}
           </Grid>
         </motion.div>
-      </Container>
 
-      {/* Footer - sticky at bottom */}
-      <Box sx={{ mt: 'auto', pt: 4 }}>
-        <Container maxWidth="xl">
-          <Footer variant="simple" text={`© 2025 RBM Software • ${industry.name} Solutions`} />
-        </Container>
-      </Box>
+        <Footer variant="simple" text={`© 2025 RBM Software • ${industry.name} Solutions`} />
+      </Container>
 
       {/* Use Case Modal */}
       <UseCaseModal
@@ -1372,6 +1371,7 @@ export default function IndustryPage() {
         onClose={() => setModalOpen(false)}
         useCase={selectedUseCase}
         categoryColor={selectedCategoryColor}
+        onLaunch={handleLaunch}
       />
     </Box>
   );

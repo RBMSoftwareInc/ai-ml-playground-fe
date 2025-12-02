@@ -159,7 +159,7 @@ export default function Header({
               variant="h3"
               sx={{
                 fontWeight: 800,
-                background: titleColor || 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
+                background: titleColor || 'linear-gradient(135deg, #ef4444 0%, #f97316 100%)',
                 backgroundClip: 'text',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',

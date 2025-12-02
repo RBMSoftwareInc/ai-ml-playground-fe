@@ -1,6 +1,7 @@
 import '../styles/globals.css'
 import { Inter, Roboto } from 'next/font/google'
 import MUIProvider from '../components/MUIProvider'
+import PageLayout from '../components/PageLayout'
 
 const inter = Inter({ subsets: ['latin'] })
 const roboto = Roboto({
@@ -22,7 +23,9 @@ export default function RootLayout({
     <html lang="en">
        <body className={roboto.className}>
         <MUIProvider>
-          {children}
+          <PageLayout>
+            {children}
+          </PageLayout>
         </MUIProvider>
       </body>
     </html>

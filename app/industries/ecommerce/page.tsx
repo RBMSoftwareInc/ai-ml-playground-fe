@@ -39,6 +39,8 @@ import {
   Science,
 } from '@mui/icons-material';
 import UseCaseModal from '../../../components/UseCaseModal';
+import Header from '../../../components/Header';
+import Footer from '../../../components/Footer';
 
 const MotionPaper = motion(Paper);
 
@@ -71,7 +73,7 @@ const categories: Category[] = [
   {
     title: 'Product Discovery',
     icon: <Search />,
-    color: '#3b82f6',
+    color: '#6b7280',
     description: 'Help customers find products faster with AI-powered search',
     useCases: [
       { 
@@ -79,7 +81,7 @@ const categories: Category[] = [
         label: 'Smart Search (NLP)', 
         description: 'Natural language product search with semantic understanding', 
         icon: <Search />, 
-        route: '/nlp',
+        route: '/ecommerce/nlp',
         details: {
           duration: '5-8 min',
           difficulty: 'Beginner',
@@ -93,7 +95,7 @@ const categories: Category[] = [
         label: 'Visual Similarity', 
         description: 'Image-based product discovery using deep learning', 
         icon: <ImageSearch />, 
-        route: '/vss',
+        route: '/ecommerce/vss',
         details: {
           duration: '8-12 min',
           difficulty: 'Intermediate',
@@ -107,7 +109,7 @@ const categories: Category[] = [
         label: 'Bundle Suggestions', 
         description: 'AI-powered outfit and bundle recommendations', 
         icon: <Inventory />, 
-        route: '/bundle',
+        route: '/ecommerce/bundle',
         details: {
           duration: '6-10 min',
           difficulty: 'Intermediate',
@@ -121,7 +123,7 @@ const categories: Category[] = [
   {
     title: 'Logistics & Operations',
     icon: <LocalShipping />,
-    color: '#22c55e',
+    color: '#6b7280',
     description: 'Optimize delivery and supply chain with predictive AI',
     useCases: [
       { 
@@ -129,7 +131,7 @@ const categories: Category[] = [
         label: 'ETA Prediction', 
         description: 'Accurate delivery time forecasting', 
         icon: <Schedule />, 
-        route: '/eta',
+        route: '/ecommerce/eta',
         details: {
           duration: '5-7 min',
           difficulty: 'Beginner',
@@ -143,7 +145,7 @@ const categories: Category[] = [
         label: 'Delay Forecast', 
         description: 'Predict and prevent order delays', 
         icon: <LocalShipping />, 
-        route: '/delay',
+        route: '/ecommerce/delay',
         details: {
           duration: '6-8 min',
           difficulty: 'Intermediate',
@@ -157,7 +159,7 @@ const categories: Category[] = [
         label: 'Inventory Reorder', 
         description: 'Smart replenishment recommendations', 
         icon: <Warehouse />, 
-        route: '/inventory',
+        route: '/ecommerce/inventory',
         details: {
           duration: '8-10 min',
           difficulty: 'Advanced',
@@ -171,7 +173,7 @@ const categories: Category[] = [
   {
     title: 'Personalization',
     icon: <Person />,
-    color: '#a855f7',
+    color: '#6b7280',
     description: 'Deliver tailored experiences for every customer',
     useCases: [
       { 
@@ -179,7 +181,7 @@ const categories: Category[] = [
         label: 'Real-Time Personalization', 
         description: 'Dynamic content per user session', 
         icon: <Person />, 
-        route: '/personalization',
+        route: '/ecommerce/personalization',
         details: {
           duration: '10-15 min',
           difficulty: 'Advanced',
@@ -193,7 +195,7 @@ const categories: Category[] = [
         label: 'AI Chat Assistant', 
         description: 'Intelligent conversational support', 
         icon: <Chat />, 
-        route: '/chat',
+        route: '/ecommerce/chat',
         details: {
           duration: '8-12 min',
           difficulty: 'Intermediate',
@@ -207,7 +209,7 @@ const categories: Category[] = [
         label: 'Voice Search', 
         description: 'Voice-enabled product discovery', 
         icon: <Mic />, 
-        route: '/voice',
+        route: '/ecommerce/voice',
         details: {
           duration: '5-8 min',
           difficulty: 'Intermediate',
@@ -221,7 +223,7 @@ const categories: Category[] = [
   {
     title: 'Pricing & Fraud',
     icon: <AttachMoney />,
-    color: '#f97316',
+    color: '#ef4444',
     description: 'Maximize revenue while protecting against fraud',
     useCases: [
       { 
@@ -229,7 +231,7 @@ const categories: Category[] = [
         label: 'Dynamic Pricing', 
         description: 'AI-driven price optimization', 
         icon: <AttachMoney />, 
-        route: '/pricing',
+        route: '/ecommerce/pricing',
         details: {
           duration: '10-12 min',
           difficulty: 'Advanced',
@@ -257,7 +259,7 @@ const categories: Category[] = [
         label: 'Coupon Abuse', 
         description: 'Detect promotional code misuse', 
         icon: <LocalOffer />, 
-        route: '/coupon',
+        route: '/ecommerce/coupon',
         details: {
           duration: '6-8 min',
           difficulty: 'Intermediate',
@@ -271,7 +273,7 @@ const categories: Category[] = [
   {
     title: 'Marketing Intelligence',
     icon: <TrendingDown />,
-    color: '#ec4899',
+    color: '#ef4444',
     description: 'Data-driven marketing with predictive insights',
     useCases: [
       { 
@@ -279,7 +281,7 @@ const categories: Category[] = [
         label: 'Churn Prediction', 
         description: 'Identify at-risk customers early', 
         icon: <TrendingDown />, 
-        route: '/churn',
+        route: '/ecommerce/churn',
         details: {
           duration: '8-10 min',
           difficulty: 'Intermediate',
@@ -293,7 +295,7 @@ const categories: Category[] = [
         label: 'Customer Segmentation', 
         description: 'AI-powered audience clustering', 
         icon: <PeopleAlt />, 
-        route: '/segmentation',
+        route: '/ecommerce/segmentation',
         details: {
           duration: '10-12 min',
           difficulty: 'Advanced',
@@ -307,7 +309,7 @@ const categories: Category[] = [
         label: 'Email Subject Gen', 
         description: 'AI-generated high-converting subjects', 
         icon: <Email />, 
-        route: '/subject',
+        route: '/ecommerce/subject',
         details: {
           duration: '3-5 min',
           difficulty: 'Beginner',
@@ -321,7 +323,7 @@ const categories: Category[] = [
         label: 'Lead Gen Blueprint', 
         description: 'AI strategy recommendations', 
         icon: <Leaderboard />, 
-        route: '/leadgen',
+        route: '/ecommerce/leadgen',
         details: {
           duration: '8-10 min',
           difficulty: 'Intermediate',
@@ -335,7 +337,7 @@ const categories: Category[] = [
   {
     title: 'Product Intelligence',
     icon: <Category />,
-    color: '#06b6d4',
+    color: '#6b7280',
     description: 'Automate product data management with AI',
     useCases: [
       { 
@@ -343,7 +345,7 @@ const categories: Category[] = [
         label: 'Variant Assignment', 
         description: 'Automatic variant detection', 
         icon: <Label />, 
-        route: '/variant',
+        route: '/ecommerce/variant',
         details: {
           duration: '5-7 min',
           difficulty: 'Beginner',
@@ -357,7 +359,7 @@ const categories: Category[] = [
         label: 'Auto Categorization', 
         description: 'ML-powered taxonomy mapping', 
         icon: <Category />, 
-        route: '/categorization',
+        route: '/ecommerce/categorization',
         details: {
           duration: '6-8 min',
           difficulty: 'Intermediate',
@@ -371,7 +373,7 @@ const categories: Category[] = [
         label: 'Review Sentiment', 
         description: 'Customer feedback insights', 
         icon: <Reviews />, 
-        route: '/sentiment',
+        route: '/ecommerce/sentiment',
         details: {
           duration: '5-8 min',
           difficulty: 'Beginner',
@@ -385,7 +387,7 @@ const categories: Category[] = [
         label: 'Description Generator', 
         description: 'AI-generated product copy', 
         icon: <Description />, 
-        route: '/descriptions',
+        route: '/ecommerce/descriptions',
         details: {
           duration: '3-5 min',
           difficulty: 'Beginner',
@@ -399,7 +401,7 @@ const categories: Category[] = [
   {
     title: 'Creative & AR Tools',
     icon: <AutoFixHigh />,
-    color: '#8b5cf6',
+    color: '#6b7280',
     description: 'Enhance product visuals with AI creativity',
     useCases: [
       { 
@@ -435,7 +437,7 @@ const categories: Category[] = [
         label: 'AI Try-On (AR)', 
         description: 'Virtual fitting room', 
         icon: <Checkroom />, 
-        route: '/tryon',
+        route: '/ecommerce/tryon',
         details: {
           duration: '10-15 min',
           difficulty: 'Advanced',
@@ -449,7 +451,7 @@ const categories: Category[] = [
   {
     title: 'Gamification',
     icon: <Quiz />,
-    color: '#f43f5e',
+    color: '#ef4444',
     description: 'Engage customers with interactive AI experiences',
     useCases: [
       { 
@@ -457,7 +459,7 @@ const categories: Category[] = [
         label: 'Product Match Quiz', 
         description: 'Interactive recommendation quiz', 
         icon: <Quiz />, 
-        route: '/quiz',
+        route: '/ecommerce/quiz',
         details: {
           duration: '5-8 min',
           difficulty: 'Beginner',
@@ -471,7 +473,7 @@ const categories: Category[] = [
         label: 'Spin-to-Win', 
         description: 'Gamified promotional wheel', 
         icon: <Casino />, 
-        route: '/spin',
+        route: '/ecommerce/spin',
         details: {
           duration: '3-5 min',
           difficulty: 'Beginner',
@@ -485,7 +487,7 @@ const categories: Category[] = [
         label: 'IQ Game Suite', 
         description: 'Engagement mini-games', 
         icon: <SportsEsports />, 
-        route: '/iq',
+        route: '/ecommerce/iq',
         details: {
           duration: '5-10 min',
           difficulty: 'Intermediate',
@@ -499,7 +501,7 @@ const categories: Category[] = [
   {
     title: 'Analytics & Insights',
     icon: <ShowChart />,
-    color: '#64748b',
+    color: '#6b7280',
     description: 'Data-driven decisions with predictive analytics',
     useCases: [
       { 
@@ -507,7 +509,7 @@ const categories: Category[] = [
         label: 'Sales Forecasting', 
         description: 'Predict future sales trends', 
         icon: <ShowChart />, 
-        route: '/forecast',
+        route: '/ecommerce/forecast',
         details: {
           duration: '10-12 min',
           difficulty: 'Advanced',
@@ -521,7 +523,7 @@ const categories: Category[] = [
         label: 'Best Launch Timing', 
         description: 'Optimal product release schedule', 
         icon: <CalendarMonth />, 
-        route: '/timing',
+        route: '/ecommerce/timing',
         details: {
           duration: '6-8 min',
           difficulty: 'Intermediate',
@@ -535,7 +537,7 @@ const categories: Category[] = [
         label: 'A/B Test Analyzer', 
         description: 'Statistical experiment analysis', 
         icon: <Science />, 
-        route: '/abtest',
+        route: '/ecommerce/abtest',
         details: {
           duration: '8-10 min',
           difficulty: 'Intermediate',
@@ -565,18 +567,13 @@ export default function EcommercePage() {
   const router = useRouter();
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
   const [selectedUseCase, setSelectedUseCase] = useState<UseCase | null>(null);
-  const [selectedCategoryColor, setSelectedCategoryColor] = useState<string>('#3b82f6');
+  const [selectedCategoryColor, setSelectedCategoryColor] = useState<string>('#6b7280');
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleUseCaseClick = (useCase: UseCase, categoryColor: string) => {
     setSelectedUseCase(useCase);
     setSelectedCategoryColor(categoryColor);
     setModalOpen(true);
-  };
-
-  const handleLaunch = (route: string) => {
-    setModalOpen(false);
-    router.push(route);
   };
 
   return (
@@ -586,6 +583,8 @@ export default function EcommercePage() {
         background: '#0a0a0a',
         py: 4,
         position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
       }}
     >
       {/* Background effects */}
@@ -617,65 +616,38 @@ export default function EcommercePage() {
         }}
       />
 
+      {/* Header */}
       <Container maxWidth="xl" sx={{ position: 'relative', zIndex: 1 }}>
-        {/* Header */}
-        <Box sx={{ mb: 5 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
-            <Tooltip title="Back to Industries" arrow>
-              <IconButton
-                onClick={() => router.push('/')}
-                sx={{
-                  color: 'rgba(255,255,255,0.7)',
-                  border: '1px solid rgba(255,255,255,0.1)',
-                  '&:hover': {
-                    background: 'rgba(255,255,255,0.05)',
-                    borderColor: 'rgba(255,255,255,0.2)',
-                  },
-                }}
-              >
-                <ArrowBackIcon />
-              </IconButton>
-            </Tooltip>
-            <Box>
-              <Typography
-                variant="h3"
-                sx={{
-                  fontWeight: 800,
-                  background: 'linear-gradient(135deg, #ef4444 0%, #f97316 100%)',
-                  backgroundClip: 'text',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  fontFamily: '"Inter", "Roboto", sans-serif',
-                }}
-              >
-                E-commerce AI
-              </Typography>
-              <Typography variant="body1" sx={{ color: 'rgba(255,255,255,0.5)', mt: 0.5 }}>
-                30+ AI/ML use cases to transform your online store
-              </Typography>
-            </Box>
-          </Box>
+        <Header
+          variant="simple"
+          title="E-commerce AI"
+          tagline="30+ AI/ML use cases to transform your online store"
+          showBackButton={true}
+          backUrl="/"
+          titleColor="linear-gradient(135deg, #ef4444 0%, #ef4444 100%)"
+        />
+      </Container>
 
+      <Container maxWidth="xl" sx={{ position: 'relative', zIndex: 1, flex: 1, display: 'flex', flexDirection: 'column' }}>
           {/* Info banner */}
           <Paper
             sx={{
               p: 2,
               mt: 3,
-              background: 'rgba(59, 130, 246, 0.08)',
-              border: '1px solid rgba(59, 130, 246, 0.2)',
+              background: 'rgba(107, 114, 128, 0.08)',
+              border: '1px solid rgba(107, 114, 128, 0.2)',
               borderRadius: 2,
               display: 'flex',
               alignItems: 'center',
               gap: 2,
             }}
           >
-            <InfoOutlinedIcon sx={{ color: '#3b82f6' }} />
+            <InfoOutlinedIcon sx={{ color: '#6b7280' }} />
             <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)' }}>
               <strong>Tip:</strong> Click on any use case to see details, estimated time, and launch the interactive demo. 
               Each demo includes real AI models and sample data.
             </Typography>
           </Paper>
-        </Box>
 
         {/* Categories Grid */}
         <motion.div variants={containerVariants} initial="hidden" animate="visible">
@@ -818,11 +790,12 @@ export default function EcommercePage() {
           </Grid>
         </motion.div>
 
-        {/* CMS Section */}
+        {/* CMS Section - Hidden in UI but code preserved */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.5 }}
+          style={{ display: 'none' }}
         >
           <Paper
             sx={{
@@ -886,14 +859,14 @@ export default function EcommercePage() {
             </Box>
           </Paper>
         </motion.div>
-
-        {/* Footer */}
-        <Box sx={{ textAlign: 'center', mt: 6, pb: 4 }}>
-          <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.3)' }}>
-            © 2025 RBM Software • E-commerce AI Solutions
-          </Typography>
-        </Box>
       </Container>
+
+      {/* Footer - sticky at bottom */}
+      <Box sx={{ mt: 'auto', pt: 4 }}>
+        <Container maxWidth="xl">
+          <Footer variant="simple" text="© 2025 RBM Software • E-commerce AI Solutions" />
+        </Container>
+      </Box>
 
       {/* Use Case Modal */}
       <UseCaseModal
@@ -901,7 +874,6 @@ export default function EcommercePage() {
         onClose={() => setModalOpen(false)}
         useCase={selectedUseCase}
         categoryColor={selectedCategoryColor}
-        onLaunch={handleLaunch}
       />
     </Box>
   );

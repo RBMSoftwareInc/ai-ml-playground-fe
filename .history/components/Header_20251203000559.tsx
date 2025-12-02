@@ -159,7 +159,7 @@ export default function Header({
               variant="h3"
               sx={{
                 fontWeight: 800,
-                background: titleColor || 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
+                background: titleColor || 'linear-gradient(135deg, #ef4444 0%, #f97316 100%)',
                 backgroundClip: 'text',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
@@ -195,44 +195,16 @@ export default function Header({
       }}
     >
       <Box sx={{ height: '80px', display: 'flex', alignItems: 'center', px: { xs: 2, sm: 4 } }}>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <img 
-              src="/images/rbm-logo.svg" 
-              alt="RBM" 
-              style={{ 
-                height: 40, 
-                filter: 'brightness(0) saturate(100%) invert(15%) sepia(100%) saturate(7472%) hue-rotate(0deg) brightness(99%) contrast(118%)' 
-              }} 
-            />
-            <Typography variant="h6" sx={{ color: '#fff' }}>RBM Software</Typography>
-          </Box>
-          <Typography 
-            variant="caption" 
-            sx={{ 
-              color: 'rgba(255,255,255,0.5)', 
-              fontSize: '0.75rem',
-              letterSpacing: '0.05em',
-              position: 'relative',
-              '&::after': {
-                content: '""',
-                position: 'absolute',
-                right: -8,
-                top: '50%',
-                transform: 'translateY(-50%)',
-                width: 2,
-                height: '50%',
-                background: 'rgba(255,255,255,0.5)',
-                animation: 'blink 1s infinite',
-                '@keyframes blink': {
-                  '0%, 50%': { opacity: 1 },
-                  '51%, 100%': { opacity: 0 },
-                },
-              },
-            }}
-          >
-            {rbmTaglineText}
-          </Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          <img 
+            src="/images/rbm-logo.svg" 
+            alt="RBM" 
+            style={{ 
+              height: 40, 
+              filter: 'brightness(0) saturate(100%) invert(15%) sepia(100%) saturate(7472%) hue-rotate(0deg) brightness(99%) contrast(118%)' 
+            }} 
+          />
+          <Typography variant="h6" sx={{ color: '#fff' }}>RBM Software</Typography>
         </Box>
       </Box>
     </Box>

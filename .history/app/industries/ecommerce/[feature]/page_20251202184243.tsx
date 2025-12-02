@@ -61,7 +61,6 @@ export default function EcommerceFeaturePage() {
   }, [feature, router]);
 
   return (
-    
     <Box
       sx={{
         minHeight: '100vh',

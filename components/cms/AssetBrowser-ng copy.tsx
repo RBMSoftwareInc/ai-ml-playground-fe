@@ -119,7 +119,7 @@ export default function AssetBrowserNG() {
         <Toolbar sx={{ justifyContent: 'space-between', minHeight: headerHeight }}>
           <Box display="flex" flexDirection="column" gap={0.5}>
             <Typography variant="subtitle1" sx={{ fontWeight: 'bold', color: grey[800] }}>
-              <img src="/images/rbm-logo.svg" alt="RBM Logo" style={{ height: 22, marginRight: 8, verticalAlign: 'middle' }} />
+              <img src="/images/rbm-logo.svg" alt="RBM Logo" style={{ height: 22, marginRight: 8, verticalAlign: 'middle', filter: 'brightness(0) saturate(100%) invert(15%) sepia(100%) saturate(7472%) hue-rotate(0deg) brightness(99%) contrast(118%)' }} />
               .comIQ Studio
             </Typography>
             <Typography

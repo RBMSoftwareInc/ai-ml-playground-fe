@@ -84,8 +84,8 @@ const themeConfigs: Record<ThemeKey, ThemeOptions> = {
   pulse: {
     palette: {
       mode: 'dark',
-      primary: { main: '#7c4dff' },
-      secondary: { main: '#00e5ff' },
+      primary: { main: '#6b7280' },
+      secondary: { main: '#9ca3af' },
       background: { default: '#050219', paper: 'rgba(16,11,32,0.85)' },
       text: { primary: '#fdfcff', secondary: 'rgba(255,255,255,0.7)' },
     },
@@ -93,8 +93,8 @@ const themeConfigs: Record<ThemeKey, ThemeOptions> = {
       MuiPaper: {
         styleOverrides: {
           root: {
-            backgroundImage: 'radial-gradient(circle at top, rgba(124,77,255,0.2), transparent 60%)',
-            border: '1px solid rgba(124,77,255,0.2)',
+            backgroundImage: 'radial-gradient(circle at top, rgba(107,114,128,0.2), transparent 60%)',
+            border: '1px solid rgba(107,114,128,0.2)',
           },
         },
       },

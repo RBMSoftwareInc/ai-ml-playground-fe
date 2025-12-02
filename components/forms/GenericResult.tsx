@@ -24,7 +24,7 @@ export default function GenericResult({
     >
       {result !== null ? (
         <>
-          <Typography variant="h6" fontWeight="bold" sx={{ color: '#4caf50' }}>
+          <Typography variant="h6" fontWeight="bold" sx={{ color: '#6b7280' }}>
             {label}: {unit ? `${result} ${unit}` : result}
           </Typography>
           {datetime && (

@@ -5,16 +5,12 @@ import {
   Box,
   Typography,
   IconButton,
-  Chip,
   alpha,
   Backdrop,
 } from '@mui/material';
 import { motion, AnimatePresence } from 'framer-motion';
 import CloseIcon from '@mui/icons-material/Close';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
-import AutoGraphIcon from '@mui/icons-material/AutoGraph';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import { getUseCase } from '../lib/useCases';
 
 interface UseCaseModalProps {
   open: boolean;
@@ -34,7 +30,6 @@ interface UseCaseModalProps {
     };
   } | null;
   categoryColor: string;
-  onLaunch: (route: string) => void;
 }
 
 const backdropVariants = {
@@ -83,7 +78,6 @@ export default function UseCaseModal({
   onClose,
   useCase,
   categoryColor,
-  onLaunch,
 }: UseCaseModalProps) {
   // Close on escape key
   useEffect(() => {
@@ -102,17 +96,9 @@ export default function UseCaseModal({
 
   if (!useCase) return null;
 
-  const details = useCase.details || {
-    duration: '5-10 min',
-    difficulty: 'Beginner',
-    benefits: [
-      'Real-time AI predictions',
-      'Interactive demo environment',
-      'Production-ready code samples',
-    ],
-    howItWorks: 'This AI model processes your input data through our ML pipeline, delivering instant predictions with explainable results.',
-    techStack: ['Python', 'TensorFlow', 'FastAPI', 'React'],
-  };
+  // Get the use case component
+  const useCaseData = getUseCase(useCase.key);
+  const UseCaseComponent = useCaseData?.component;
 
   return (
     <AnimatePresence>
@@ -155,13 +141,13 @@ export default function UseCaseModal({
               initial="hidden"
               animate="visible"
               exit="exit"
-              style={{ pointerEvents: 'auto' }}
+              style={{ pointerEvents: 'auto', width: '100%', maxWidth: '95vw', height: '95vh' }}
             >
               <Box
                 sx={{
                   width: '100%',
-                  maxWidth: 600,
-                  maxHeight: '90vh',
+                  height: '100%',
+                  maxHeight: '95vh',
                   overflow: 'auto',
                   background: 'linear-gradient(145deg, #1a1a1a 0%, #121212 100%)',
                   borderRadius: 4,
@@ -173,6 +159,8 @@ export default function UseCaseModal({
                     inset 0 1px 0 rgba(255,255,255,0.05)
                   `,
                   position: 'relative',
+                  display: 'flex',
+                  flexDirection: 'column',
                   '&::-webkit-scrollbar': {
                     width: '6px',
                   },
@@ -216,11 +204,10 @@ export default function UseCaseModal({
                   <CloseIcon />
                 </IconButton>
 
-                {/* Content */}
-                <Box sx={{ p: 4, position: 'relative' }}>
-                  {/* Header */}
+                {/* Header Section */}
+                <Box sx={{ p: 3, pb: 2, borderBottom: '1px solid rgba(255,255,255,0.1)', flexShrink: 0 }}>
                   <motion.div variants={contentVariants}>
-                    <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2, mb: 3, pr: 5 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2, pr: 5 }}>
                       <Box
                         sx={{
                           p: 1.5,
@@ -234,9 +221,9 @@ export default function UseCaseModal({
                       >
                         {useCase.icon}
                       </Box>
-                      <Box>
+                      <Box sx={{ flex: 1 }}>
                         <Typography
-                          variant="h4"
+                          variant="h5"
                           sx={{
                             fontWeight: 800,
                             color: '#fff',
@@ -248,10 +235,10 @@ export default function UseCaseModal({
                           {useCase.label}
                         </Typography>
                         <Typography
-                          variant="body1"
+                          variant="body2"
                           sx={{
                             color: 'rgba(255,255,255,0.6)',
-                            mt: 1,
+                            mt: 0.5,
                           }}
                         >
                           {useCase.description}
@@ -259,182 +246,19 @@ export default function UseCaseModal({
                       </Box>
                     </Box>
                   </motion.div>
+                </Box>
 
-                  {/* Meta chips */}
-                  <motion.div variants={contentVariants}>
-                    <Box sx={{ display: 'flex', gap: 1.5, mb: 4, flexWrap: 'wrap' }}>
-                      <Chip
-                        icon={<AccessTimeIcon sx={{ fontSize: 16 }} />}
-                        label={details.duration}
-                        size="small"
-                        sx={{
-                          background: 'rgba(255,255,255,0.05)',
-                          border: '1px solid rgba(255,255,255,0.1)',
-                          color: '#fff',
-                          fontWeight: 600,
-                          '& .MuiChip-icon': { color: categoryColor },
-                        }}
-                      />
-                      <Chip
-                        icon={<AutoGraphIcon sx={{ fontSize: 16 }} />}
-                        label={details.difficulty}
-                        size="small"
-                        sx={{
-                          background: alpha(categoryColor, 0.1),
-                          border: `1px solid ${alpha(categoryColor, 0.3)}`,
-                          color: categoryColor,
-                          fontWeight: 600,
-                          '& .MuiChip-icon': { color: categoryColor },
-                        }}
-                      />
-                    </Box>
-                  </motion.div>
-
-                  {/* How it works */}
-                  <motion.div variants={contentVariants}>
-                    <Box sx={{ mb: 4 }}>
-                      <Typography
-                        variant="subtitle2"
-                        sx={{
-                          color: 'rgba(255,255,255,0.4)',
-                          textTransform: 'uppercase',
-                          letterSpacing: '0.1em',
-                          fontSize: '0.7rem',
-                          mb: 1.5,
-                        }}
-                      >
-                        How It Works
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          color: 'rgba(255,255,255,0.75)',
-                          lineHeight: 1.8,
-                          fontFamily: '"Inter", sans-serif',
-                        }}
-                      >
-                        {details.howItWorks}
+                {/* Use Case Content */}
+                <Box sx={{ flex: 1, overflow: 'auto', p: 3 }}>
+                  {UseCaseComponent ? (
+                    <UseCaseComponent />
+                  ) : (
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 400 }}>
+                      <Typography variant="body1" sx={{ color: 'rgba(255,255,255,0.5)' }}>
+                        Use case component not found
                       </Typography>
                     </Box>
-                  </motion.div>
-
-                  {/* Benefits */}
-                  <motion.div variants={contentVariants}>
-                    <Box sx={{ mb: 4 }}>
-                      <Typography
-                        variant="subtitle2"
-                        sx={{
-                          color: 'rgba(255,255,255,0.4)',
-                          textTransform: 'uppercase',
-                          letterSpacing: '0.1em',
-                          fontSize: '0.7rem',
-                          mb: 1.5,
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: 1,
-                        }}
-                      >
-                        <TipsAndUpdatesIcon sx={{ fontSize: 14 }} />
-                        Key Benefits
-                      </Typography>
-                      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                        {details.benefits.map((benefit, idx) => (
-                          <Box
-                            key={idx}
-                            sx={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: 1.5,
-                            }}
-                          >
-                            <Box
-                              sx={{
-                                width: 6,
-                                height: 6,
-                                borderRadius: '50%',
-                                background: categoryColor,
-                                boxShadow: `0 0 10px ${categoryColor}`,
-                              }}
-                            />
-                            <Typography
-                              variant="body2"
-                              sx={{ color: 'rgba(255,255,255,0.7)' }}
-                            >
-                              {benefit}
-                            </Typography>
-                          </Box>
-                        ))}
-                      </Box>
-                    </Box>
-                  </motion.div>
-
-                  {/* Tech Stack */}
-                  <motion.div variants={contentVariants}>
-                    <Box sx={{ mb: 4 }}>
-                      <Typography
-                        variant="subtitle2"
-                        sx={{
-                          color: 'rgba(255,255,255,0.4)',
-                          textTransform: 'uppercase',
-                          letterSpacing: '0.1em',
-                          fontSize: '0.7rem',
-                          mb: 1.5,
-                        }}
-                      >
-                        Tech Stack
-                      </Typography>
-                      <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-                        {details.techStack.map((tech) => (
-                          <Chip
-                            key={tech}
-                            label={tech}
-                            size="small"
-                            sx={{
-                              background: 'rgba(255,255,255,0.03)',
-                              border: '1px solid rgba(255,255,255,0.08)',
-                              color: 'rgba(255,255,255,0.6)',
-                              fontSize: '0.75rem',
-                            }}
-                          />
-                        ))}
-                      </Box>
-                    </Box>
-                  </motion.div>
-
-                  {/* Launch Button */}
-                  <motion.div variants={contentVariants}>
-                    <Box
-                      component={motion.button}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={() => onLaunch(useCase.route)}
-                      sx={{
-                        width: '100%',
-                        py: 2,
-                        px: 4,
-                        border: 'none',
-                        borderRadius: 3,
-                        background: `linear-gradient(135deg, ${categoryColor} 0%, ${alpha(categoryColor, 0.8)} 100%)`,
-                        color: '#fff',
-                        fontSize: '1rem',
-                        fontWeight: 700,
-                        fontFamily: '"Inter", sans-serif',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: 1,
-                        boxShadow: `0 10px 40px ${alpha(categoryColor, 0.4)}`,
-                        transition: 'all 0.3s ease',
-                        '&:hover': {
-                          boxShadow: `0 15px 50px ${alpha(categoryColor, 0.5)}`,
-                        },
-                      }}
-                    >
-                      <PlayArrowIcon />
-                      Launch Demo
-                    </Box>
-                  </motion.div>
+                  )}
                 </Box>
               </Box>
             </motion.div>

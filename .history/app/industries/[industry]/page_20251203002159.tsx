@@ -1118,6 +1118,12 @@ export default function IndustryPage() {
     setModalOpen(true);
   };
 
+  const handleLaunch = (route: string) => {
+    setModalOpen(false);
+    if (route !== '#') {
+      router.push(route);
+    }
+  };
 
   return (
     <Box

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Box, Typography, Container, Grid, Paper, alpha, IconButton, Tooltip } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
+import { useTypewriter } from '../components/hooks/useTypewriter';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import ExploreIcon from '@mui/icons-material/Explore';
@@ -154,6 +155,19 @@ export default function HomePage() {
   const router = useRouter();
   const [columns, setColumns] = useState<3 | 4>(3);
 
+  // Typewriter animations
+  const { displayedText: aiPlaygroundText } = useTypewriter({ 
+    text: 'AI Playground', 
+    speed: 80,
+    delay: 300 
+  });
+  
+  const { displayedText: rbmTaglineText } = useTypewriter({ 
+    text: 'RBM → Reimagine. Build. Modernize', 
+    speed: 50,
+    delay: 1500 
+  });
+
   const handleIndustryClick = (industry: Industry) => {
     router.push(industry.route);
   };
@@ -239,35 +253,82 @@ export default function HomePage() {
             <Box
               sx={{
                 display: 'inline-flex',
+                flexDirection: 'column',
                 alignItems: 'center',
-                gap: 2,
+                gap: 1.5,
                 mb: 3,
               }}
             >
-              <Box
-                component="img"
-                src="/images/rbm-logo.svg"
-                alt="RBM"
-                sx={{
-                  height: 56,
-                  filter: 'brightness(0) invert(1)',
-                }}
-                onError={(e: any) => {
-                  e.target.style.display = 'none';
-                }}
-              />
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                <Box
+                  component="img"
+                  src="/images/rbm-logo.svg"
+                  alt="RBM"
+                  sx={{
+                    height: 56,
+                    filter: 'brightness(0) saturate(100%) invert(15%) sepia(100%) saturate(7472%) hue-rotate(0deg) brightness(99%) contrast(118%)',
+                  }}
+                  onError={(e: any) => {
+                    e.target.style.display = 'none';
+                  }}
+                />
+                <Typography
+                  variant="h1"
+                  sx={{
+                    fontSize: { xs: '2.5rem', md: '3.5rem' },
+                    fontWeight: 800,
+                    color: '#ffffff',
+                    letterSpacing: '-0.03em',
+                    textShadow: '0 0 60px rgba(239,68,68,0.3)',
+                    fontFamily: '"Inter", "Roboto", sans-serif',
+                    position: 'relative',
+                    '&::after': {
+                      content: '""',
+                      position: 'absolute',
+                      right: -8,
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      width: 3,
+                      height: '60%',
+                      background: '#ef4444',
+                      animation: 'blink 1s infinite',
+                      '@keyframes blink': {
+                        '0%, 50%': { opacity: 1 },
+                        '51%, 100%': { opacity: 0 },
+                      },
+                    },
+                  }}
+                >
+                  {aiPlaygroundText}
+                </Typography>
+              </Box>
               <Typography
-                variant="h1"
+                variant="body1"
                 sx={{
-                  fontSize: { xs: '2.5rem', md: '3.5rem' },
-                  fontWeight: 800,
-                  color: '#ffffff',
-                  letterSpacing: '-0.03em',
-                  textShadow: '0 0 60px rgba(239,68,68,0.3)',
+                  color: 'rgba(255,255,255,0.6)',
+                  fontSize: { xs: '0.9rem', md: '1rem' },
+                  fontWeight: 400,
+                  letterSpacing: '0.05em',
                   fontFamily: '"Inter", "Roboto", sans-serif',
+                  position: 'relative',
+                  '&::after': {
+                    content: '""',
+                    position: 'absolute',
+                    right: -8,
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    width: 2,
+                    height: '50%',
+                    background: 'rgba(255,255,255,0.5)',
+                    animation: 'blink 1s infinite',
+                    '@keyframes blink': {
+                      '0%, 50%': { opacity: 1 },
+                      '51%, 100%': { opacity: 0 },
+                    },
+                  },
                 }}
               >
-                AI Playground
+                {rbmTaglineText}
               </Typography>
             </Box>
           </motion.div>
