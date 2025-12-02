@@ -26,7 +26,7 @@ export default function IQLoginPage() {
   const [authMode, setAuthMode] = useState('login'); // 'register' or 'login' for biometric
   const [message, setMessage] = useState('');
 
-  const bufferDecode = (value) => {
+  const bufferDecode = (value: string) => {
     const base64 = value
       .replace(/-/g, '+')
       .replace(/_/g, '/')
@@ -34,15 +34,16 @@ export default function IQLoginPage() {
     return Uint8Array.from(atob(base64), (c) => c.charCodeAt(0));
   };
   
-  const bufferEncode = (value) =>
-    btoa(String.fromCharCode(...new Uint8Array(value)))
+  const bufferEncode = (value: ArrayLike<number>) =>
+    btoa(String.fromCharCode(...Array.from(new Uint8Array(value))))
       .replace(/\+/g, '-')
       .replace(/\//g, '_')
       .replace(/=+$/, '');
 
   const handleConventionalLogin = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/v1/cms/auth/conventional/login', {
+      const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:5000';
+      const response = await fetch(`${apiUrl}/api/v1/cms/auth/conventional/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
@@ -51,15 +52,16 @@ export default function IQLoginPage() {
       if (!response.ok) throw new Error(data.message || 'Login failed.');
       setMessage(data.message);
       router.push('/dashboard/cms');
-    } catch (error) {
-      setMessage(error.message || 'Login failed.');
+    } catch (error: unknown) {
+      setMessage((error as Error).message || 'Login failed.');
     }
   };
 
   const handleBiometricAuth = async () => {
     try {
       const url = authMode === 'register' ? '/register/options' : '/login/options';
-      const response = await fetch(`http://localhost:5000/api/v1/cms/auth${url}`, {
+      const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:5000';
+      const response = await fetch(`${apiUrl}/api/v1/cms/auth${url}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username }),
@@ -94,18 +96,21 @@ export default function IQLoginPage() {
 
         const credential = await navigator.credentials.create({ publicKey });
 
-       // Step 4: Prepare the credential for the server
-      const credentialData = {
-        id: credential.id,
-        rawId: btoa(String.fromCharCode(...new Uint8Array(credential.rawId))),
-        type: credential.type, // Add the type field
-        response: {
-          clientDataJSON: btoa(String.fromCharCode(...new Uint8Array(credential.response.clientDataJSON))),
-          attestationObject: btoa(String.fromCharCode(...new Uint8Array(credential.response.attestationObject))),
-        },
+        // Step 4: Prepare the credential for the server
+        if (!credential) throw new Error('No credential received');
+        const publicKeyCredential = credential as PublicKeyCredential;
+        const credentialData = {
+          id: publicKeyCredential.id,
+          rawId: btoa(String.fromCharCode(...Array.from(new Uint8Array(publicKeyCredential.rawId)))),
+          type: publicKeyCredential.type, // Add the type field
+          response: {
+            clientDataJSON: btoa(String.fromCharCode(...Array.from(new Uint8Array((publicKeyCredential.response as AuthenticatorAttestationResponse).clientDataJSON)))),
+            attestationObject: btoa(String.fromCharCode(...Array.from(new Uint8Array((publicKeyCredential.response as AuthenticatorAttestationResponse).attestationObject)))),
+          },
         state_id: options.state_id,
       };
-        const verifyResponse = await fetch('http://localhost:5000/api/v1/cms/auth/register/verify', {
+        const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:5000';
+        const verifyResponse = await fetch(`${apiUrl}/api/v1/cms/auth/register/verify`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(credentialData),
@@ -141,7 +146,8 @@ export default function IQLoginPage() {
           state_id: options.state_id,
         };
 
-        const verifyResponse = await fetch('http://localhost:5000/api/v1/cms/auth/login/verify', {
+        const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:5000';
+        const verifyResponse = await fetch(`${apiUrl}/api/v1/cms/auth/login/verify`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(credential),
@@ -152,9 +158,9 @@ export default function IQLoginPage() {
         setMessage(verifyData.message);
         router.push('/dashboard/cms');
       }
-    } catch (error) {
+    } catch (error: unknown) {
       console.error(error);
-      setMessage(error.message || 'Biometric authentication failed.');
+      setMessage((error instanceof Error ? error.message : 'Biometric authentication failed.') || 'Biometric authentication failed.');
     }
   };
 

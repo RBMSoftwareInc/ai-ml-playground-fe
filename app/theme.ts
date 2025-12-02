@@ -14,7 +14,7 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: 'Santoshi',
+    fontFamily: 'Inter, "Roboto", sans-serif',
   },
 });
 

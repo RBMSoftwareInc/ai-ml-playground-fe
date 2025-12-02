@@ -6,7 +6,10 @@ import { Box, Typography, IconButton, Dialog, DialogTitle, DialogContent, Tabs, 
 import { Edit as EditIcon, Delete as DeleteIcon } from "@mui/icons-material";
 import { styled } from "@mui/material/styles";
 import _ from "lodash"; // Add lodash for debounce
-import ReactQuill from "react-quill";
+import dynamic from "next/dynamic";
+
+// Dynamically import ReactQuill to avoid SSR issues
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
 import DataSourceConfigPage from "./DataSourceConfigPage";
 import GraphQLQueryBuilderPage from "./GraphQLQueryBuilderPage";

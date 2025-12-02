@@ -90,10 +90,12 @@ import {
   LocalOffer,
   LocalShipping,
 } from "@mui/icons-material";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import dynamic from "next/dynamic";
+
+// Dynamically import ReactQuill to avoid SSR issues
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+import "react-quill/dist/quill.snow.css";
 
 interface EcomCanvasEditorProps {
   canvas: Canvas | null;

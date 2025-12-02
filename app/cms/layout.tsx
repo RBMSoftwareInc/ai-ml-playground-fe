@@ -2,10 +2,10 @@
 
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import { Santoshi } from "next/font/google";
+import { Inter } from "next/font/google";
 import "../../styles/globals.css";
 
-const font = Santoshi({ subsets: ["latin"], weight: ["400", "700"] });
+const font = Inter({ subsets: ["latin"], weight: ["400", "700"] });
 
 export default function CMSLayout({ children }: { children: React.ReactNode }) {
   return (

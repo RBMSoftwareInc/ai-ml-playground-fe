@@ -82,11 +82,7 @@ const MainContent = styled(Box)(({ theme }) => ({
   },
 }));
 
-interface PageProps {
-  pageData?: any;
-}
-
-export default function Page({ pageData }: PageProps) {
+export default function Page() {
   const router = useRouter();
   const [selectedPage, setSelectedPage] = useState<PageType | null>(null);
   const [selectedStoreId, setSelectedStoreId] = useState<string>('');
