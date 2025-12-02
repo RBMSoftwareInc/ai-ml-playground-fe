@@ -8,7 +8,7 @@ export default function AskGeneInput({ value, onChange, onSubmit }: any) {
     <Box display="flex" gap={2}>
       <TextField
         fullWidth
-        placeholder="Type your question to Gene..."
+        placeholder="Type your question for the AI copilot..."
         variant="outlined"
         value={value}
         onChange={(e) => onChange(e.target.value)}

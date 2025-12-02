@@ -3,16 +3,30 @@ import { Box, Typography } from '@mui/material'
 
 export default function GenericResult({
   result,
-  datetime
+  datetime,
+  label = 'Result',
+  unit,
 }: {
-  result: number | null,
-  datetime: string | null
+  result: number | null;
+  datetime: string | null;
+  label?: string;
+  unit?: string;
 }) {
   return (
-    <Box sx={{ mt: 4, p: 3, bgcolor: '#e8f5e9', borderLeft: '5px solid #388e3c', borderRadius: 2 }}>
+    <Box
+      sx={{
+        mt: 2,
+        p: 3,
+        borderRadius: 3,
+        backgroundColor: 'rgba(76, 175, 80, 0.08)',
+        border: '1px solid rgba(76,175,80,0.3)',
+      }}
+    >
       {result !== null ? (
         <>
-          <Typography variant="h6" fontWeight="bold" color="green">ETA: {result} hours</Typography>
+          <Typography variant="h6" fontWeight="bold" sx={{ color: '#4caf50' }}>
+            {label}: {unit ? `${result} ${unit}` : result}
+          </Typography>
           {datetime && (
             <Typography variant="body2" color="text.secondary">
               🕒 Expected by: <strong>{datetime}</strong>
@@ -20,8 +34,8 @@ export default function GenericResult({
           )}
         </>
       ) : (
-        <Typography color="gray">No result yet. Please submit the form.</Typography>
+        <Typography color="text.secondary">No result yet. Please submit the form.</Typography>
       )}
     </Box>
-  )
+  );
 }

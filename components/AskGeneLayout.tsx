@@ -36,7 +36,7 @@ export default function AskGeneLayout() {
       </Box>
 
       <Typography variant="h5" fontWeight="bold" color="primary">
-        🧞 Ask Gene — Interactive AI Journey
+        🤖 AI Copilot — Interactive Journey
       </Typography>
 
       <SmartSuggestions onSelect={handleSubmit} />

@@ -1,7 +1,8 @@
 'use client';
 
 import {
-  Drawer, List, ListSubheader, ListItem, ListItemText
+  Drawer, List, ListSubheader, ListItem, ListItemText,
+  Box
 } from '@mui/material';
 
 import {
@@ -56,6 +57,7 @@ export const navSections = [
       { key: 'churn', label: 'Churn Prediction' },
       { key: 'segmentation', label: 'Customer Segmentation' },
       { key: 'subject', label: 'Email Subject Line Generator' },
+      { key: 'leadgen', label: 'Lead Gen Blueprint' },
     ],
   },
   {
@@ -82,7 +84,8 @@ export const navSections = [
     icon: <Quiz />,
     items: [
       { key: 'quiz', label: 'Product Match Quiz' },
-      { key: 'spin', label: 'Gamified Spin-to-Win' },
+      { key: 'spin', label: 'Spin-to-Win' },
+      { key: 'iq', label: 'IQ Game Suite' },
     ],
   },
   {
@@ -114,18 +117,37 @@ export default function Sidebar({ activeCategory, activeTab, onSelectTab }: Side
         flexShrink: 0,
         [`& .MuiDrawer-paper`]: {
           width: drawerWidth,
-          mt: '113px',
+          mt: '64px', // Adjusted for header height
           boxSizing: 'border-box',
-          backgroundColor: '#fff',
-          borderRight: '1px solid #eee',
+          background: 'rgba(0,0,0,0.9)',
+          borderRight: '1px solid rgba(255,255,255,0.1)',
+          backdropFilter: 'blur(10px)',
+          '&::-webkit-scrollbar': {
+            width: '6px',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            backgroundColor: 'rgba(255,255,255,0.2)',
+            borderRadius: '3px',
+          }
         },
       }}
     >
       <List
         subheader={
-          <ListSubheader sx={{ fontWeight: 'bold', color: '#000', display: 'flex', alignItems: 'center' }}>
-            {section.icon}
-            <span style={{ marginLeft: 8 }}>{section.title}</span>
+          <ListSubheader 
+            sx={{ 
+              bgcolor: 'transparent',
+              color: '#ff0000',
+              fontWeight: 600,
+              display: 'flex',
+              alignItems: 'center',
+              p: 2,
+              fontFamily: '"Roboto", sans-serif',
+              letterSpacing: '0.5px'
+            }}
+          >
+            <Box sx={{ mr: 2, color: '#ff0000' }}>{section.icon}</Box>
+            {section.title}
           </ListSubheader>
         }
       >
@@ -136,11 +158,23 @@ export default function Sidebar({ activeCategory, activeTab, onSelectTab }: Side
             selected={activeTab === item.key}
             onClick={() => onSelectTab(item.key)}
             sx={{
-              color: activeTab === item.key ? 'red' : '#333',
-              fontWeight: activeTab === item.key ? 'bold' : 'normal',
+              mx: 1,
+              my: 0.5,
+              borderRadius: 1,
+              color: activeTab === item.key ? '#ff0000' : 'rgba(255,255,255,0.7)',
+              bgcolor: activeTab === item.key ? 'rgba(255,0,0,0.1)' : 'transparent',
+              '&:hover': {
+                bgcolor: 'rgba(255,0,0,0.05)',
+              },
+              transition: 'all 0.3s ease',
+              '& .MuiListItemText-primary': {
+                fontFamily: '"Roboto", sans-serif',
+                fontWeight: activeTab === item.key ? 600 : 400,
+                fontSize: '0.9rem',
+              }
             }}
           >
-            <ListItemText primary={item.label} sx={{ pl: 2 }} />
+            <ListItemText primary={item.label} sx={{ pl: 1 }} />
           </ListItem>
         ))}
       </List>

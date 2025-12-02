@@ -1,112 +1,89 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { useState } from 'react';
+import GenericForm from '../../components/forms/GenericForm';
+import GenericTheory from '../../components/forms/GenericTheory';
+import DatasetViewer from '../../components/forms/DatasetViewer';
+import InsightsPanel from '../../components/forms/InsightsPanel';
+import CopilotPanel from '../../components/forms/AskGene';
+import DemoPlayer from '../../components/forms/DemoPlayer';
+import FormWrapper from '../../components/FormWrapper';
+import { Paper, Typography } from '@mui/material';
+import { postJson } from '../../lib/api';
+
+const variantFields = [
+  { name: 'customer_segment', label: 'Customer Segment', type: 'select', options: ['premium', 'regular', 'business', 'new_user'] },
+  { name: 'time_of_day', label: 'Time of Day', type: 'select', options: ['morning', 'afternoon', 'evening', 'night'] },
+  { name: 'device_type', label: 'Device Type', type: 'select', options: ['mobile', 'desktop', 'tablet'] },
+  { name: 'gender', label: 'Gender', type: 'select', options: ['male', 'female', 'other'] },
+  { name: 'browser', label: 'Browser', type: 'select', options: ['Chrome', 'Firefox', 'Safari', 'Edge'] },
+  { name: 'platform', label: 'Platform', type: 'select', options: ['Android', 'iOS', 'Windows', 'macOS'] },
+  { name: 'location', label: 'Location', type: 'select', options: ['Delhi', 'Mumbai', 'Bangalore', 'Hyderabad'] },
+  { name: 'num_clicks', label: 'Number of Clicks', type: 'number' },
+  { name: 'session_time_minutes', label: 'Session Time (minutes)', type: 'number' },
+];
+
+const variantTheory = `
+Variant intelligence blends behavioral cohorts with experimentation lift to determine which creative, layout,
+or offer variant should be served next. Pair customer affinities with live engagement signals to keep experiences fresh.
+`;
+
+function VariantResult({ recommendation }: { recommendation: string | null }) {
+  return (
+    <Paper
+      sx={{
+        p: 3,
+        borderRadius: 3,
+        backgroundColor: 'rgba(255,255,255,0.02)',
+        border: '1px solid rgba(255,255,255,0.08)',
+        minHeight: 160,
+      }}
+    >
+      {recommendation ? (
+        <>
+          <Typography variant="h5" sx={{ fontWeight: 700, color: '#ffca28' }}>
+            Recommended Variant
+          </Typography>
+          <Typography variant="body1" sx={{ mt: 1.5 }}>
+            {recommendation}
+          </Typography>
+        </>
+      ) : (
+        <Typography color="text.secondary">Submit the form to see the next best variant.</Typography>
+      )}
+    </Paper>
+  );
+}
 
 export default function VariantPage() {
-  const [formData, setFormData] = useState({
-    customer_segment: 'premium',
-    time_of_day: 'morning',
-    device_type: 'mobile',
-    gender: 'female',
-    browser: 'Chrome',
-    platform: 'Android',
-    location: 'Mumbai',
-    num_clicks: 8,
-    session_time_minutes: 6.5
-  })
+  const [loading, setLoading] = useState(false);
+  const [variant, setVariant] = useState<string | null>(null);
 
-  const [variant, setVariant] = useState<string | null>(null)
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setFormData(prev => ({
-      ...prev,
-      [name]: name.includes('clicks') || name.includes('minutes') ? parseFloat(value) : value
-    }))
-  }
-
-  const handleSubmit = async () => {
-    const res = await fetch('http://localhost:5000/api/v1/variant/predict', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData)
-    })
-    const data = await res.json()
-    setVariant(data.predicted_variant)
-  }
+  const handleSubmit = async (payload: any) => {
+    setLoading(true);
+    try {
+      const data = await postJson('/api/v1/variant/predict', payload);
+      setVariant(data.predicted_variant);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <div className="max-w-2xl mx-auto mt-12 bg-white p-8 rounded-lg shadow-xl">
-      <h2 className="text-3xl font-bold text-purple-700 mb-6">🎯 Variant Recommendation</h2>
-
-      <div className="grid grid-cols-1 gap-4">
-        {[
-          ['customer_segment', ['premium', 'regular', 'business', 'new_user']],
-          ['time_of_day', ['morning', 'afternoon', 'evening', 'night']],
-          ['device_type', ['mobile', 'desktop', 'tablet']],
-          ['gender', ['male', 'female', 'other']],
-          ['browser', ['Chrome', 'Firefox', 'Safari', 'Edge']],
-          ['platform', ['Android', 'iOS', 'Windows', 'macOS']],
-          ['location', ['Delhi', 'Mumbai', 'Bangalore', 'Hyderabad']]
-        ].map(([key, options]) => (
-          <div key={key as string}>
-            <label className="block mb-1 capitalize">{(key as string).replace('_', ' ')}</label>
-            <select
-              name={key as string}
-              value={formData[key as keyof typeof formData]}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 shadow-sm"
-            >
-              {(options as string[]).map(opt => (
-                <option key={opt}>{opt}</option>
-              ))}
-            </select>
-          </div>
-        ))}
-
-        <div>
-          <label className="block mb-1">Number of Clicks</label>
-          <input
-            type="number"
-            name="num_clicks"
-            value={formData.num_clicks}
-            onChange={handleChange}
-            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 shadow-sm"
-          />
-        </div>
-
-        <div>
-          <label className="block mb-1">Session Time (minutes)</label>
-          <input
-            type="number"
-            name="session_time_minutes"
-            value={formData.session_time_minutes}
-            onChange={handleChange}
-            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 shadow-sm"
-          />
-        </div>
-
-        <button
-          onClick={handleSubmit}
-          className="mt-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-2 rounded-lg font-semibold hover:scale-105 transition-transform"
-        >
-          🎁 Recommend Variant
-        </button>
-
-        {variant && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-            className="mt-6 bg-indigo-100 border-l-4 border-indigo-500 text-indigo-900 p-4 rounded-lg"
-          >
-            <p className="text-xl font-bold">
-              Recommended Variant: {variant}
-            </p>
-          </motion.div>
-        )}
-      </div>
-    </div>
-  )
+    <FormWrapper
+      title="Variant Recommendation"
+      subtitle="Blend cohort context with engagement signals to decide which creative or layout variant should surface next."
+      metaLabel="PRODUCT INTELLIGENCE"
+    >
+      {{
+        form: <GenericForm fields={variantFields} onSubmit={handleSubmit} loading={loading} />,
+        result: <VariantResult recommendation={variant} />,
+        theory: <GenericTheory content={variantTheory} />,
+        dataset: <DatasetViewer />,
+        insights: <InsightsPanel />,
+        ask: <CopilotPanel contextType="variant" />,
+        demo: <DemoPlayer />,
+      }}
+    </FormWrapper>
+  );
 }

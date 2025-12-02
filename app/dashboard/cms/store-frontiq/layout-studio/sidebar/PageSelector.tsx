@@ -108,7 +108,7 @@ export default function PageSelector({ selected, onSelect }: Props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [expanded, setExpanded] = useState<string | false>(false);
-page_types
+
   useEffect(() => {
     const fetchPageTypes = async () => {
       setLoading(true);

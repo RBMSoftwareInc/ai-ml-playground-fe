@@ -7,6 +7,7 @@ import {
   Typography,
   FormHelperText,
 } from '@mui/material';
+import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
 interface Props {
@@ -50,15 +51,47 @@ export default function UserInfoStep({ formData, onChange, setStepValid }: Props
   };
 
   return (
-    <Box display="flex" flexDirection="column" gap={3}>
-      <TextField
-        label="Your Name"
-        value={formData.name}
-        onChange={(e) => validateField('name', e.target.value)}
-        error={!!errors.name}
-        helperText={errors.name}
-        fullWidth
-      />
+     <Box 
+      component={motion.div}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      sx={{ 
+        '& .MuiTextField-root': {
+          mb: 3,
+          '& .MuiOutlinedInput-root': {
+            color: 'white',
+            borderRadius: 1,
+            bgcolor: 'rgba(255,255,255,0.05)',
+            '&:hover': {
+              '& .MuiOutlinedInput-notchedOutline': {
+                borderColor: '#ff0000',
+              }
+            },
+            '& .MuiOutlinedInput-notchedOutline': {
+              borderColor: 'rgba(255,255,255,0.2)',
+            }
+          },
+          '& .MuiInputLabel-root': {
+            color: 'rgba(255,255,255,0.7)',
+            fontFamily: '"Roboto", sans-serif',
+            fontWeight: 500
+          }
+        }
+      }}
+    >
+      <Typography 
+        variant="h6" 
+        sx={{ 
+          mb: 3,
+          color: '#ff0000',
+          fontFamily: '"Roboto", sans-serif',
+          fontWeight: 600,
+          letterSpacing: '-0.02em'
+        }}
+      >
+        Let's get started with your details
+      </Typography>
+      
       <TextField
         label="Email"
         value={formData.email}

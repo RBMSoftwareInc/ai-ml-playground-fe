@@ -49,7 +49,7 @@ export default function DashboardPage() {
 
       {mode === 'ai' && (
         <Typography variant="body1" color="secondary">
-          🔮 Ask Gene: Our AI assistant will guide your journey!
+          🔮 AI Copilot: Our assistant will guide your journey!
         </Typography>
       )}
     </Box>

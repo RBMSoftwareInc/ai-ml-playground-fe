@@ -536,8 +536,8 @@ export default function LayoutCanvas({
 
       {error.widgets && <Alert severity="error" sx={{ mb: 2 }}>{error.widgets}</Alert>}
 
-      <Box sx={{ flex: 1, overflow: 'auto', display: 'flex', justifyContent: 'center', alignItems: 'flex-start' }}>
-        <CanvasPaper sx={{ width: scaledWidth, maxWidth: '100%' }}>
+      <Box sx={{ flex: 1, overflow: 'auto', display: 'flex', justifyContent: 'center', alignItems: 'flex-start' , minHeight: '650px'}}>
+        <CanvasPaper sx={{ width: scaledWidth, maxWidth: '100%', minHeight: '650px' }}>
           <HeaderFooterBox>
             <Box display="flex" justifyContent="space-between">
               <Typography variant="subtitle2">

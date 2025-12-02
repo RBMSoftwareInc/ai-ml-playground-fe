@@ -1,10 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Box, Typography, styled, Button, List, ListItem, ListItemText, Drawer, IconButton, Paper, CircularProgress } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
+import { Box, Typography, styled, Button, CircularProgress } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import CloseIcon from '@mui/icons-material/Close';
 import PromptBar from './fragments/PromptBar';
 import LayoutCanvas from './canvas/LayoutCanvas';
 import FragmentDesignerCanvas from './canvas/FragmentDesignerCanvas';
@@ -16,6 +14,34 @@ import { drawerWidth } from '../../../../../components/Sidebar';
 import PageSelector from './sidebar/PageSelector';
 import axios from 'axios';
 
+// Define interfaces for TypeScript
+interface PageType {
+  type: string;
+}
+
+interface Layout {
+  id: string;
+  structure: any[];
+  pageType: string;
+  isCustom?: boolean;
+}
+
+interface Fragment {
+  id: string;
+  name: string;
+  pageType: string;
+  layoutId: number;
+  style: any;
+  widgetId?: number | null;
+  widgetConfig?: any;
+  isUserDefined: boolean;
+  thumbnail?: string;
+}
+
+interface WidgetConfig {
+  [key: string]: { type: string; id: string | null };
+}
+
 const API_BASE_URL = 'http://localhost:5000/api/v1/cms/layout';
 
 // Styled Components for Page.tsx
@@ -25,10 +51,6 @@ const PageContainer = styled(Box)(({ theme }) => ({
   minHeight: '100vh',
   backgroundColor: '#F5F5F5',
 }));
-
-interface WidgetConfig {
-  [key: string]: { type: string; id: string | null };
-}
 
 const SidebarContainer = styled(Box)(({ theme }) => ({
   width: drawerWidth || 300,
@@ -44,12 +66,12 @@ const SidebarContainer = styled(Box)(({ theme }) => ({
   flexDirection: 'column',
 }));
 
-const MainContent = styled(Box)(({ theme, drawerOpen }) => ({
+const MainContent = styled(Box)(({ theme }) => ({
   flexGrow: 1,
   padding: theme.spacing(4),
   backgroundColor: '#F5F5F5',
   paddingTop: theme.spacing(2),
-  width: drawerOpen ? `calc(100% - ${drawerWidth || 300}px - 30%)` : `calc(100% - ${drawerWidth || 300}px)`,
+  width: `calc(100% - ${drawerWidth || 300}px)`,
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
@@ -60,103 +82,26 @@ const MainContent = styled(Box)(({ theme, drawerOpen }) => ({
   },
 }));
 
-const StyledDrawer = styled(Drawer)(({ theme }) => ({
-  '& .MuiDrawer-paper': {
-    width: '30%',
-    backgroundColor: '#FFFFFF',
-    padding: theme.spacing(3),
-    borderLeft: `1px solid #C0C0C0`,
-    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
-    borderRadius: '0 8px 8px 0',
-    [theme.breakpoints.down('md')]: {
-      width: '100%',
-      borderRadius: 0,
-    },
-  },
-}));
+interface PageProps {
+  pageData?: any;
+}
 
-const FragmentButton = styled(Button)(({ theme }) => ({
-  textTransform: 'none',
-  color: '#616161',
-  backgroundColor: '#F5F5F5',
-  borderColor: '#C0C0C0',
-  borderRadius: theme.shape.borderRadius,
-  padding: theme.spacing(1, 2),
-  display: 'flex',
-  justifyContent: 'space-between',
-  transition: 'all 0.3s ease',
-  '&:hover': {
-    backgroundColor: '#E0E0E0',
-    borderColor: '#A9A9A9',
-    transform: 'translateY(-2px)',
-    boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
-  },
-  '&.Mui-selected': {
-    backgroundColor: '#C0C0C0',
-    color: '#FFFFFF',
-    borderColor: '#A9A9A9',
-  },
-}));
-
-const FragmentsListContainer = styled(Box)(({ theme }) => ({
-  backgroundColor: '#FFFFFF',
-  padding: theme.spacing(3),
-  borderRadius: theme.shape.borderRadius * 2,
-  boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
-  border: `1px solid #C0C0C0`,
-  transition: 'all 0.3s ease',
-  '&:hover': {
-    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.15)',
-  },
-  width: '100%',
-}));
-
-const DrawerHeader = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  marginBottom: theme.spacing(2),
-}));
-
-const TitleTypography = styled(Typography)(({ theme }) => ({
-  fontSize: '2.5rem',
-  fontWeight: 'bold',
-  letterSpacing: '1px',
-  background: 'linear-gradient(90deg, #616161, #C0C0C0)',
-  WebkitBackgroundClip: 'text',
-  WebkitTextFillColor: 'transparent',
-  marginBottom: theme.spacing(4),
-  paddingLeft: theme.spacing(2),
-  paddingTop: theme.spacing(8),
-  position: 'relative',
-  '&:before': {
-    content: '""',
-    position: 'absolute',
-    left: 0,
-    bottom: -4,
-    width: '60px',
-    height: '4px',
-    backgroundColor: '#C0C0C0',
-    borderRadius: '2px',
-  },
-}));
-
-export default function Page({ pageData }) {
+export default function Page({ pageData }: PageProps) {
   const router = useRouter();
-  const [selectedPage, setSelectedPage] = useState(null);
-  const [selectedFragment, setSelectedFragment] = useState(null);
-  const [selectedStoreId, setSelectedStoreId] = useState<string | ''>('');
-  const [isCreatingNew, setIsCreatingNew] = useState(false);
-  const [fragments, setFragments] = useState([]);
-  const [layouts, setLayouts] = useState([]);
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const [widgetConfig, setWidgetConfig] = useState<WidgetConfig>({});
-  const [layout, setLayout] = useState({ layoutId: '', structure: [], pageType: 'Home' });
-  const [isCustomLayout, setIsCustomLayout] = useState(false);
-  const [designTone, setDesignTone] = useState('Minimal');
-  const [storeType, setStoreType] = useState('Fashion');
-  const [loading, setLoading] = useState(false);
+  const [selectedPage, setSelectedPage] = useState<PageType | null>(null);
+  const [selectedStoreId, setSelectedStoreId] = useState<string>('');
+  const [fragments, setFragments] = useState<Fragment[]>([]);
+  const [layouts, setLayouts] = useState<Layout[]>([]);
+  const [layout, setLayout] = useState<Layout>({ id: '', structure: [], pageType: 'Home' });
+  const [isCustomLayout, setIsCustomLayout] = useState<boolean>(false);
+  const [designTone, setDesignTone] = useState<string>('Minimal');
+  const [storeType, setStoreType] = useState<string>('Fashion');
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [isDesigningFragment, setIsDesigningFragment] = useState<boolean>(false);
+  const [selectedFragment, setSelectedFragment] = useState<Fragment | null>(null);
+  const [isCreatingNew, setIsCreatingNew] = useState<boolean>(false);
+  const [widgetConfig, setWidgetConfig] = useState<WidgetConfig>({});
 
   // Fetch layouts and fragments when the page loads or selectedPage changes
   useEffect(() => {
@@ -166,24 +111,29 @@ export default function Page({ pageData }) {
         setError(null);
         const pageType = selectedPage?.type || 'Home';
         const layoutsResponse = await axios.get(`${API_BASE_URL}/layout-by-page-type`, {
-          params: { pageType }
+          params: { pageType },
         });
-        const layoutsData = layoutsResponse.data;
+        const layoutsData: Layout[] = layoutsResponse.data;
+        console.log('Fetched layouts:', layoutsData); // Debug: Log layouts
         setLayouts(layoutsData);
 
         if (layoutsData.length > 0) {
-          setLayout({
-            layoutId: layoutsData[0].id,
+          const newLayout = {
+            id: layoutsData[0].id,
             structure: layoutsData[0].structure,
             pageType: layoutsData[0].pageType,
-          });
+          };
+          setLayout(newLayout);
+          console.log('Set layout:', newLayout); // Debug: Log layout state
           setIsCustomLayout(layoutsData[0].isCustom || false);
         } else {
-          setLayout({
-            layoutId: '',
+          const defaultLayout = {
+            id: '',
             structure: [],
             pageType: pageType,
-          });
+          };
+          setLayout(defaultLayout);
+          console.log('Set default layout:', defaultLayout);
           setIsCustomLayout(false);
         }
       } catch (err) {
@@ -198,9 +148,12 @@ export default function Page({ pageData }) {
       try {
         setLoading(true);
         setError(null);
-        const layoutId = layout.layoutId || 1; // Use the current layoutId
+        const layoutId = layout.id || '1'; // Fallback to '1' if layout.id is empty
+        console.log('Fetching fragments for layoutId:', layoutId); // Debug: Log layoutId
         const fragmentsResponse = await axios.get(`${API_BASE_URL}/get/${layoutId}/fragments`);
-        setFragments(fragmentsResponse.data);
+        const fragmentsData: Fragment[] = fragmentsResponse.data;
+        console.log('Fetched fragments:', fragmentsData); // Debug: Log fragments
+        setFragments(fragmentsData);
       } catch (err) {
         console.error('Error fetching fragments:', err);
         setError('Failed to load fragments. Please try again.');
@@ -211,33 +164,32 @@ export default function Page({ pageData }) {
 
     fetchLayouts();
     fetchFragments();
-  }, [selectedPage]);
+  }, [selectedPage, layout.id]);
 
-  const pageFragments = Array.isArray(fragments)
-  ? fragments.filter((fragment) => fragment.pageType === (selectedPage?.type || 'Home'))
-  : [];
-
-  const handlePageSelect = (pageType) => {
+  const handlePageSelect = (pageType: PageType) => {
     console.log('Page.tsx received pageType:', pageType);
     setSelectedPage(pageType);
     setSelectedFragment(null);
     setIsCreatingNew(false);
-    setDrawerOpen(false);
+    setIsDesigningFragment(false);
   };
 
-  const handleFragmentSelect = (fragment) => {
+  const handleFragmentSelect = (fragment: Fragment) => {
+    console.log('Selected fragment:', fragment);
     setSelectedFragment(fragment);
     setIsCreatingNew(false);
-    setDrawerOpen(true);
+    setIsDesigningFragment(true);
   };
 
   const handleCreateNewFragment = () => {
+    console.log('Creating new fragment');
     setSelectedFragment(null);
     setIsCreatingNew(true);
-    setDrawerOpen(true);
+    setIsDesigningFragment(true);
   };
 
-  const handleSaveFragment = (updatedFragment, isNew = false) => {
+  const handleSaveFragment = (updatedFragment: Fragment, isNew: boolean = false) => {
+    console.log('Saving fragment:', updatedFragment, 'isNew:', isNew);
     if (isNew) {
       setFragments((prev) => [...prev, updatedFragment]);
     } else {
@@ -247,176 +199,110 @@ export default function Page({ pageData }) {
     }
     setSelectedFragment(null);
     setIsCreatingNew(false);
-    setDrawerOpen(false);
+    setIsDesigningFragment(false);
   };
 
-  const handleCancel = () => {
+  const handleCancelFragmentDesign = () => {
+    console.log('Canceling fragment edit');
     setSelectedFragment(null);
     setIsCreatingNew(false);
-    setDrawerOpen(false);
+    setIsDesigningFragment(false);
   };
 
-  const toggleDrawer = () => {
-    setDrawerOpen(!drawerOpen);
-    if (drawerOpen) {
-      setSelectedFragment(null);
-      setIsCreatingNew(false);
-    }
+  // Ensure layout updates are reflected in LayoutCanvas
+  const handleLayoutUpdate = (newLayout: Layout, isCustom: boolean) => {
+    console.log('Updating layout:', newLayout, 'isCustom:', isCustom); // Debug: Log layout update
+    setLayout(newLayout);
+    setIsCustomLayout(isCustom);
   };
 
-  const renderFragmentsList = () => (
-    <FragmentsListContainer>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-        <Typography variant="h6" sx={{ color: '#616161' }}>
-          Fragments for {selectedPage?.type || 'Home'}
-        </Typography>
-        <Button
-          variant="outlined"
-          startIcon={<AddIcon />}
-          onClick={handleCreateNewFragment}
-          sx={{ textTransform: 'none', color: '#A9A9A9', borderColor: '#C0C0C0' }}
-        >
-          Design New Fragment
-        </Button>
-      </Box>
-      {loading ? (
-        <Box sx={{ display: 'flex', justifyContent: 'center', py: 2 }}>
-          <CircularProgress />
-        </Box>
-      ) : error ? (
-        <Typography variant="body2" color="error" sx={{ mt: 2 }}>
-          {error}
-        </Typography>
-      ) : fragments.length > 0 ? (
-        <List>
-          {fragments.map((fragment) => (
-            <ListItem key={fragment.id} disablePadding>
-              <FragmentButton
-                fullWidth
-                variant="outlined"
-                onClick={() => handleFragmentSelect(fragment)}
-                className={selectedFragment && selectedFragment.id === fragment.id ? 'Mui-selected' : ''}
-              >
-                <ListItemText primary={fragment.name} />
-                {fragment.isUserDefined && (
-                  <Typography variant="caption" sx={{ color: '#A9A9A9' }}>
-                    (Custom)
-                  </Typography>
-                )}
-              </FragmentButton>
-            </ListItem>
-          ))}
-        </List>
-      ) : (
-        <Typography variant="body2" sx={{ color: '#616161', mt: 2 }}>
-          No fragments available for this page type.
-        </Typography>
-      )}
-    </FragmentsListContainer>
-  );
+  // Debug: Log selectedFragment before passing to FragmentDesignerCanvas
+  useEffect(() => {
+    console.log('Passing selectedFragment to FragmentDesignerCanvas:', selectedFragment);
+  }, [selectedFragment]);
 
   return (
     <PageContainer>
       <Header onLogout={() => router.push('/dashboard/cms/login')} />
 
-      <PromptBar
-        onPrompt={(text) => {
-          console.log('Prompt submitted:', text);
-        }}
-      />
-      <Typography variant="h4" gutterBottom>
-        LayoutIQ
-      </Typography>
-
-      <Box sx={{ display: 'flex', flexDirection: 'row', flex: 2 }}>
-        <Paper sx={{ p: 1, flexGrow: 1 }}>
-          <Typography variant="h6" gutterBottom>
-            Page Selector
+      {isDesigningFragment ? (
+        <FragmentDesignerCanvas
+          pageType={selectedPage?.type || 'Home'}
+          layoutId={layout.id ? parseInt(layout.id) : 1}
+          fragment={selectedFragment}
+          onSave={(updatedFragment) => handleSaveFragment(updatedFragment, isCreatingNew)}
+          onCancel={handleCancelFragmentDesign}
+          fragments={fragments}
+          setFragments={setFragments}
+          handleFragmentSelect={handleFragmentSelect}
+          handleCreateNewFragment={handleCreateNewFragment}
+        />
+      ) : (
+        <>
+          <PromptBar
+            onPrompt={(text: string) => {
+              console.log('Prompt submitted:', text);
+            }}
+          />
+          <Typography variant="h4" gutterBottom>
+            LayoutIQ
           </Typography>
-          <PageSelector
-            selected={selectedPage?.type || 'Home'}
-            onSelect={handlePageSelect}
-          />
 
-          <Button
-            variant="outlined"
-            startIcon={<MenuIcon />}
-            onClick={toggleDrawer}
-            sx={{ mt: 2, textTransform: 'none', color: '#A9A9A9', borderColor: '#C0C0C0' }}
-          >
-            Fragments
-          </Button>
-        </Paper>
-
-        <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', width: drawerOpen ? `calc(100% - ${drawerWidth || 300}px - 30%)` : `calc(100% - ${drawerWidth || 300}px)` }}>
-          <LayoutControlsPanel
-            pageType={selectedPage?.type || 'Home'}
-            designTone={designTone}
-            storeType={storeType}
-            setDesignTone={setDesignTone}
-            setStoreType={setStoreType}
-            setLayout={setLayout}
-            setIsCustomLayout={setIsCustomLayout}
-            layout={layout}
-            selectedStoreId={selectedStoreId}
-            setSelectedStoreId={setSelectedStoreId}
-          />
-          <MainContent drawerOpen={drawerOpen}>
-            {loading ? (
-              <Box sx={{ display: 'flex', justifyContent: 'center', py: 2 }}>
-                <CircularProgress />
-              </Box>
-            ) : error ? (
-              <Typography variant="body2" color="error" sx={{ mt: 2 }}>
-                {error}
+          <Box sx={{ display: 'flex', flexDirection: 'row', flex: 2 }}>
+            <SidebarContainer>
+              <Typography variant="h6" gutterBottom>
+                Page Selector
               </Typography>
-            ) : (
-              <LayoutCanvas
-                layout={layout}
-                setLayout={setLayout}
-                widgetConfig={widgetConfig}
-                setWidgetConfig={setWidgetConfig}
-                isCustomLayout={isCustomLayout}
-                setIsCustomLayout={setIsCustomLayout}
-                selectedStoreId={selectedStoreId}
+              <PageSelector
+                selected={selectedPage?.type || 'Home'}
+                onSelect={handlePageSelect}
               />
-            )}
-          </MainContent>
-        </Box>
+              <Button
+                variant="outlined"
+                startIcon={<MenuIcon />}
+                onClick={() => setIsDesigningFragment(true)}
+                sx={{ mt: 2, textTransform: 'none', color: '#A9A9A9', borderColor: '#C0C0C0' }}
+              >
+                Fragments
+              </Button>
+            </SidebarContainer>
 
-        <StyledDrawer
-          anchor="right"
-          open={drawerOpen}
-          onClose={toggleDrawer}
-          variant="temporary"
-          ModalProps={{
-            BackdropProps: {
-              sx: { backgroundColor: 'rgba(0, 0, 0, 0.2)' },
-            },
-          }}
-        >
-          <DrawerHeader>
-            <Typography variant="h6" sx={{ color: '#616161' }}>
-              Fragments for {selectedPage?.type || 'Home'}
-            </Typography>
-            <IconButton onClick={toggleDrawer}>
-              <CloseIcon />
-            </IconButton>
-          </DrawerHeader>
-
-          {(selectedFragment || isCreatingNew) ? (
-            <FragmentDesignerCanvas
-              pageType={selectedPage?.type || 'Home'}
-              layoutId={layout.layoutId ? parseInt(layout.layoutId) : 1}
-              fragment={selectedFragment}
-              onSave={(updatedFragment) => handleSaveFragment(updatedFragment, isCreatingNew)}
-              onCancel={handleCancel}
-            />
-          ) : (
-            renderFragmentsList()
-          )}
-        </StyledDrawer>
-      </Box>
+            <MainContent>
+              <LayoutControlsPanel
+                pageType={selectedPage?.type || 'Home'}
+                designTone={designTone}
+                storeType={storeType}
+                setDesignTone={setDesignTone}
+                setStoreType={setStoreType}
+                setLayout={handleLayoutUpdate}
+                setIsCustomLayout={setIsCustomLayout}
+                layout={layout}
+                selectedStoreId={selectedStoreId}
+                setSelectedStoreId={setSelectedStoreId}
+              />
+              {loading ? (
+                <Box sx={{ display: 'flex', justifyContent: 'center', py: 2 }}>
+                  <CircularProgress />
+                </Box>
+              ) : error ? (
+                <Typography variant="body2" color="error" sx={{ mt: 2 }}>
+                  {error}
+                </Typography>
+              ) : (
+                <LayoutCanvas
+                  layout={layout}
+                  setLayout={setLayout}
+                  widgetConfig={widgetConfig}
+                  setWidgetConfig={setWidgetConfig}
+                  isCustomLayout={isCustomLayout}
+                  setIsCustomLayout={setIsCustomLayout}
+                  selectedStoreId={selectedStoreId}
+                />
+              )}
+            </MainContent>
+          </Box>
+        </>
+      )}
 
       <Footer />
     </PageContainer>

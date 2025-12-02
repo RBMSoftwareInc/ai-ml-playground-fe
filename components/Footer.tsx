@@ -9,6 +9,7 @@ import {
   useTheme,
   Stack,
 } from '@mui/material';
+import { motion } from 'framer-motion';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
@@ -20,17 +21,20 @@ export default function Footer() {
     <Box
       component="footer"
       sx={{
-        bgcolor: '#111',
-        color: '#fff',
-        px: { xs: 3, sm: 6 },
-        pt: 6,
-        pb: 2,
-        fontFamily: 'Santoshi',
-        marginTop: '50px',
+        width: '100%',
+        mt: 'auto',
+        bgcolor: 'rgba(0,0,0,0.95)',
+        borderTop: '1px solid rgba(255,255,255,0.1)',
+        pr: { xs: 3, md: 6 },
+        pl: { xs: 3, md: 'calc(280px + 24px)' },
+        py: 4,
+        backdropFilter: 'blur(10px)',
       }}
     >
       <Box
         sx={{
+          position: 'relative',
+          zIndex: 1,
           display: 'flex',
           flexDirection: { xs: 'column', sm: 'row' },
           justifyContent: 'space-between',
@@ -38,87 +42,164 @@ export default function Footer() {
           flexWrap: 'wrap',
         }}
       >
-        {/* About Us */}
+        {/* About Us - existing content with updated styling */}
         <Box>
-          <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+          <Typography 
+            variant="subtitle1" 
+            sx={{
+              fontWeight: 600,
+              color: '#ff0000',
+              mb: 2,
+              letterSpacing: '0.5px'
+            }}
+          >
             About Us
           </Typography>
           {['Company', 'Services', 'Expertise', 'Contact'].map((item) => (
             <Link
               href="#"
               key={item}
-              color="inherit"
-              underline="hover"
-              display="block"
-              sx={{ fontSize: '0.9rem', mb: 0.5 }}
+              sx={{
+                color: 'rgba(255,255,255,0.7)',
+                fontSize: '0.9rem',
+                mb: 0.5,
+                display: 'block',
+                textDecoration: 'none',
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                  color: '#ff0000',
+                  transform: 'translateX(5px)'
+                }
+              }}
             >
               {item}
             </Link>
           ))}
         </Box>
 
-        {/* For You */}
+        {/* For You - existing content with updated styling */}
         <Box>
-          <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+          <Typography 
+            variant="subtitle1" 
+            sx={{
+              fontWeight: 600,
+              color: '#ff0000',
+              mb: 2,
+              letterSpacing: '0.5px'
+            }}
+          >
             For You
           </Typography>
           {['Resources', 'FAQs', 'Terms', 'Privacy'].map((item) => (
             <Link
               href="#"
               key={item}
-              color="inherit"
-              underline="hover"
-              display="block"
-              sx={{ fontSize: '0.9rem', mb: 0.5 }}
+              sx={{
+                color: 'rgba(255,255,255,0.7)',
+                fontSize: '0.9rem',
+                mb: 0.5,
+                display: 'block',
+                textDecoration: 'none',
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                  color: '#ff0000',
+                  transform: 'translateX(5px)'
+                }
+              }}
             >
               {item}
             </Link>
           ))}
         </Box>
 
-        {/* Follow Us */}
+        {/* Follow Us - existing content with updated styling */}
         <Box>
-          <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+          <Typography 
+            variant="subtitle1" 
+            sx={{
+              fontWeight: 600,
+              color: '#ff0000',
+              mb: 2,
+              letterSpacing: '0.5px'
+            }}
+          >
             Follow Us
           </Typography>
           <Stack direction="row" spacing={1}>
-            <IconButton href="#" color="inherit" size="small">
-              <FacebookIcon fontSize="small" />
+            <IconButton 
+              component={motion.button}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              href="#" 
+              sx={{
+                color: 'rgba(255,255,255,0.7)',
+                '&:hover': {
+                  color: '#ff0000',
+                  bgcolor: 'rgba(255,0,0,0.1)'
+                }
+              }}
+            >
+              <FacebookIcon />
             </IconButton>
-            <IconButton href="#" color="inherit" size="small">
-              <LinkedInIcon fontSize="small" />
+            <IconButton 
+              component={motion.button}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              href="#" 
+              sx={{
+                color: 'rgba(255,255,255,0.7)',
+                '&:hover': {
+                  color: '#ff0000',
+                  bgcolor: 'rgba(255,0,0,0.1)'
+                }
+              }}
+            >
+              <LinkedInIcon />
             </IconButton>
           </Stack>
         </Box>
       </Box>
 
-      {/* Bottom bar */}
+      {/* Bottom bar with updated styling */}
       <Box
-        mt={6}
-        pt={2}
-        borderTop="1px solid #333"
-        display="flex"
-        flexDirection={isMobile ? 'column' : 'row'}
-        alignItems="center"
-        justifyContent="space-between"
-        gap={2}
+        sx={{
+          mt: 6,
+          pt: 2,
+          borderTop: '1px solid rgba(255,255,255,0.1)',
+          display: 'flex',
+          flexDirection: isMobile ? 'column' : 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: 2,
+          position: 'relative',
+          zIndex: 1
+        }}
       >
         <Typography
           variant="caption"
-          color="gray"
-          sx={{ fontSize: '0.75rem', textAlign: isMobile ? 'center' : 'left' }}
+          sx={{ 
+            fontSize: '0.75rem',
+            textAlign: isMobile ? 'center' : 'left',
+            color: 'rgba(255,255,255,0.5)'
+          }}
         >
           ©2025 RBM Software Inc. • All Rights Reserved
         </Typography>
 
         <Box
-          component="img"
+          component={motion.img}
+          whileHover={{ scale: 1.05 }}
           src="/images/rbm-logo.svg"
           alt="RBM Logo"
           sx={{
             height: 30,
             filter: 'brightness(0) invert(1)',
             ml: isMobile ? 0 : 'auto',
+            opacity: 0.7,
+            transition: 'opacity 0.3s ease',
+            '&:hover': {
+              opacity: 1
+            }
           }}
         />
       </Box>

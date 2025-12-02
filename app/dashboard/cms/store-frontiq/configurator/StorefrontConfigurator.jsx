@@ -36,11 +36,15 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
-import Header from './Header';
-import Footer from './Footer';
+
 import Link from 'next/link';
 import JSONPretty from 'react-json-pretty';
 import 'react-json-pretty/themes/monikai.css'; // Choose a theme for JSON beautification
+
+import Header from '../../../../../components/cms/Header';
+import Footer from '../../../../../components/cms/Footer';
+import StylingBrandingTab from './tabs/StylingBrandingTab';
+import LayoutWidgetsTab from './tabs/LayoutWidgetsTab';
 
 const drawerWidth = 240;
 const headerHeight = 80;
@@ -67,6 +71,7 @@ export default function StorefrontConfigurator() {
   const [tabValue, setTabValue] = useState(0);
   const [catalogs, setCatalogs] = useState([]);
   const [selectedCatalogs, setSelectedCatalogs] = useState([]);
+  const [designTone, setDesignTone] = useState("Minimalist");
   const [theme, setTheme] = useState({
     storeName: '',
     faviconUrl: '',
@@ -633,7 +638,7 @@ export default function StorefrontConfigurator() {
                 '&:hover': { bgcolor: grey[200] },
               }}
             >
-              <Link href="/dashboard/cms/store-frontiq/shopforge-builder" passHref legacyBehavior>
+              <Link href="/dashboard/cms/store-frontiq/composeriq${storeId}" passHref legacyBehavior>
                 <ListItemText
                   primary="ShopForge Builder"
                   primaryTypographyProps={{
@@ -654,6 +659,27 @@ export default function StorefrontConfigurator() {
                 '&:hover': { bgcolor: grey[200] },
               }}
             >
+              <Link href="/dashboard/cms/store-frontiq/blueprint-studio" passHref legacyBehavior>
+                <ListItemText
+                  primary="Intelligent Page Editor"
+                  primaryTypographyProps={{
+                    color: grey[800],
+                    fontWeight: 'medium',
+                    '&:hover': { color: 'primary.main' },
+                    component: 'a',
+                  }}
+                />
+              </Link>
+              </ListItem>
+
+            <ListItem
+              sx={{
+                py: 1,
+                borderRadius: '4px',
+                transition: 'background-color 0.2s',
+                '&:hover': { bgcolor: grey[200] },
+              }}
+            >
               <Link href="/dashboard/cms/store-frontiq/layout-studio" passHref legacyBehavior>
                 <ListItemText
                   primary="Discover AI Layout Studio"
@@ -665,6 +691,7 @@ export default function StorefrontConfigurator() {
                   }}
                 />
               </Link>
+
             </ListItem>
           </List>
         </Box>
@@ -724,207 +751,27 @@ export default function StorefrontConfigurator() {
 
           {/* Tab 0: Styling & Branding */}
           <TabPanel value={tabValue} index={0}>
-            <Typography variant="h5" gutterBottom sx={{ color: grey[800], fontWeight: 'bold', mb: 3 }}>
-              Styling & Branding
-            </Typography>
-            <Grid container spacing={2}>
-              <Grid item xs={12} md={6}>
-                <TextField
-                  fullWidth
-                  label="Store/Brand Name"
-                  value={theme.storeName}
-                  onChange={(e) => handleThemeChange('storeName', e.target.value)}
-                  sx={{ mb: 2 }}
-                />
-                <TextField
-                  fullWidth
-                  label="Favicon URL"
-                  value={theme.faviconUrl}
-                  onChange={(e) => handleThemeChange('faviconUrl', e.target.value)}
-                  sx={{ mb: 2 }}
-                />
-                <TextField
-                  fullWidth
-                  label="Logo URL"
-                  value={theme.logoUrl}
-                  onChange={(e) => handleThemeChange('logoUrl', e.target.value)}
-                  sx={{ mb: 2 }}
-                />
-                <TextField
-                  fullWidth
-                  label="Banner Image URL"
-                  value={theme.bannerImage}
-                  onChange={(e) => handleThemeChange('bannerImage', e.target.value)}
-                  sx={{ mb: 2 }}
-                />
-                <TextField
-                  fullWidth
-                  label="Primary Color"
-                  type="color"
-                  value={theme.primaryColor}
-                  onChange={(e) => handleThemeChange('primaryColor', e.target.value)}
-                  sx={{ mb: 2 }}
-                />
-                <TextField
-                  fullWidth
-                  label="Secondary Color"
-                  type="color"
-                  value={theme.secondaryColor}
-                  onChange={(e) => handleThemeChange('secondaryColor', e.target.value)}
-                  sx={{ mb: 2 }}
-                />
-                <FormControl fullWidth sx={{ mb: 2 }}>
-                  <InputLabel>Font Family</InputLabel>
-                  <Select value={theme.font} onChange={(e) => handleThemeChange('font', e.target.value)} label="Font Family">
-                    <MenuItem value="Roboto">Roboto</MenuItem>
-                    <MenuItem value="Open Sans">Open Sans</MenuItem>
-                    <MenuItem value="Lato">Lato</MenuItem>
-                  </Select>
-                </FormControl>
-                <TextField
-                  fullWidth
-                  label="Background Image URL"
-                  value={theme.backgroundImage || ''}
-                  onChange={(e) => handleThemeChange('backgroundImage', e.target.value)}
-                  sx={{ mb: 2 }}
-                />
-                <TextareaAutosize
-                  minRows={4}
-                  placeholder="Custom CSS"
-                  style={{ width: '100%', padding: '8px', borderRadius: '4px' }}
-                  value={theme.customCss}
-                  onChange={(e) => handleThemeChange('customCss', e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <Typography variant="body1">Preview Price: ${price}</Typography>
-              </Grid>
-            </Grid>
-            <Button variant="contained" sx={{ mt: 3 }} onClick={() => setTabValue(1)}>
-              Next: Layout & Widgets
-            </Button>
+            <StylingBrandingTab
+              theme={theme}
+              setTheme={setTheme}
+              price={price}
+              setTabValue={setTabValue}
+              setSnackbar={setSnackbar}
+              designTone={designTone}
+              setDesignTone={setDesignTone}
+            />
           </TabPanel>
 
           {/* Tab 1: Layout & Widgets */}
           <TabPanel value={tabValue} index={1}>
-            <Typography variant="h5" gutterBottom sx={{ color: grey[800], fontWeight: 'bold', mb: 3 }}>
-              Layout & Widgets
-            </Typography>
-            <Typography variant="h6" gutterBottom sx={{ color: grey[800], fontWeight: 'medium' }}>
-              Select AI-Suggested Layout
-            </Typography>
-            <FormControl fullWidth sx={{ mb: 2 }}>
-              <InputLabel>Store Layout</InputLabel>
-              <Select
-                value={layoutConfig.selectedLayout}
-                onChange={(e) => handleLayoutConfigChange('selectedLayout', e.target.value)}
-                label="Store Layout"
-              >
-                <MenuItem value="modern-minimalist">Modern Minimalist</MenuItem>
-                <MenuItem value="ecommerce-classic">E-Commerce Classic</MenuItem>
-                <MenuItem value="bold-visuals">Bold Visuals</MenuItem>
-              </Select>
-            </FormControl>
-            <Divider sx={{ my: 2 }} />
-            <Typography variant="h6" gutterBottom sx={{ color: grey[800], fontWeight: 'medium' }}>
-              Widget Placement
-            </Typography>
-            <Typography variant="subtitle1" sx={{ color: grey[700], mb: 1 }}>
-              Header Widgets
-            </Typography>
-            <FormControl fullWidth sx={{ mb: 2 }}>
-              <InputLabel>Select Widgets for Header</InputLabel>
-              <Select
-                multiple
-                value={layoutConfig.headerWidgets}
-                onChange={(e) => handleWidgetChange('headerWidgets', e.target.value)}
-                label="Select Widgets for Header"
-              >
-                {availableWidgets.map(widget => (
-                  <MenuItem key={widget} value={widget}>
-                    {widget.replace(/-/g, ' ').replace(/\b\w/g, char => char.toUpperCase())}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <Typography variant="subtitle1" sx={{ color: grey[700], mb: 1 }}>
-              Sidebar Widgets
-            </Typography>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={layoutConfig.enableSidebar}
-                  onChange={(e) => handleLayoutConfigChange('enableSidebar', e.target.checked)}
-                />
-              }
-              label="Enable Sidebar"
-              sx={{ mb: 1 }}
+            <LayoutWidgetsTab
+              layoutConfig={layoutConfig}
+              setLayoutConfig={setLayoutConfig}
+              designTone={designTone}
+              theme={theme}
+              setTabValue={setTabValue}
+              setSnackbar={setSnackbar}
             />
-            {layoutConfig.enableSidebar && (
-              <FormControl fullWidth sx={{ mb: 2 }}>
-                <InputLabel>Select Widgets for Sidebar</InputLabel>
-                <Select
-                  multiple
-                  value={layoutConfig.sidebarWidgets}
-                  onChange={(e) => handleWidgetChange('sidebarWidgets', e.target.value)}
-                  label="Select Widgets for Sidebar"
-                >
-                  {availableWidgets.map(widget => (
-                    <MenuItem key={widget} value={widget}>
-                      {widget.replace(/-/g, ' ').replace(/\b\w/g, char => char.toUpperCase())}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            )}
-            <Typography variant="subtitle1" sx={{ color: grey[700], mb: 1 }}>
-              Main Content Widgets
-            </Typography>
-            <FormControl fullWidth sx={{ mb: 2 }}>
-              <InputLabel>Select Widgets for Main Content</InputLabel>
-              <Select
-                multiple
-                value={layoutConfig.mainContentWidgets}
-                onChange={(e) => handleWidgetChange('mainContentWidgets', e.target.value)}
-                label="Select Widgets for Main Content"
-              >
-                {availableWidgets.map(widget => (
-                  <MenuItem key={widget} value={widget}>
-                    {widget.replace(/-/g, ' ').replace(/\b\w/g, char => char.toUpperCase())}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <TextField
-              fullWidth
-              label="Number of Columns in Main Content"
-              type="number"
-              value={layoutConfig.mainContentColumns}
-              onChange={(e) => handleLayoutConfigChange('mainContentColumns', Math.max(1, Math.min(3, e.target.value)))}
-              sx={{ mb: 2 }}
-              inputProps={{ min: 1, max: 3 }}
-            />
-            <Typography variant="subtitle1" sx={{ color: grey[700], mb: 1 }}>
-              Footer Widgets
-            </Typography>
-            <FormControl fullWidth sx={{ mb: 2 }}>
-              <InputLabel>Select Widgets for Footer</InputLabel>
-              <Select
-                multiple
-                value={layoutConfig.footerWidgets}
-                onChange={(e) => handleWidgetChange('footerWidgets', e.target.value)}
-                label="Select Widgets for Footer"
-              >
-                {availableWidgets.map(widget => (
-                  <MenuItem key={widget} value={widget}>
-                    {widget.replace(/-/g, ' ').replace(/\b\w/g, char => char.toUpperCase())}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <Button variant="contained" sx={{ mt: 3 }} onClick={() => setTabValue(2)}>
-              Next: Catalog & Browse
-            </Button>
           </TabPanel>
 
           {/* Tab 2: Catalog & Browse */}
