@@ -123,7 +123,7 @@ export default function IQLoginPage() {
         const publicKey = {
           ...options,
           challenge: bufferDecode(options.challenge),
-          allowCredentials: options.allowCredentials.map((cred) => ({
+          allowCredentials: options.allowCredentials.map((cred: { id: string; [key: string]: any }) => ({
             ...cred,
             id: bufferDecode(cred.id),
           })),
