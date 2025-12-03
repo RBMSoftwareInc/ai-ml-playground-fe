@@ -6,17 +6,47 @@ import {
   Typography, 
   Button, 
   Container,
-  Paper 
+  Paper,
+  Dialog,
+  DialogContent
 } from '@mui/material';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 
-export default function AIJourneyModal() {
+interface AIJourneyModalProps {
+  open?: boolean;
+  onClose?: () => void;
+  onSelect?: (selected: 'conventional' | 'ai') => void;
+}
+
+export default function AIJourneyModal({ open = true, onClose, onSelect }: AIJourneyModalProps) {
   const router = useRouter();
   const [isHoveredConventional, setIsHoveredConventional] = useState(false);
   const [isHoveredAI, setIsHoveredAI] = useState(false);
+
+  const handleConventionalClick = () => {
+    if (onSelect) {
+      onSelect('conventional');
+    } else {
+      router.push('/dashboard/conventional');
+    }
+    if (onClose) {
+      onClose();
+    }
+  };
+
+  const handleAIClick = () => {
+    if (onSelect) {
+      onSelect('ai');
+    } else {
+      router.push('/dashboard/ai');
+    }
+    if (onClose) {
+      onClose();
+    }
+  };
 
   const JourneyCard = ({ 
     title, 
@@ -25,28 +55,36 @@ export default function AIJourneyModal() {
     onClick, 
     isHovered, 
     setHovered 
+  }: {
+    title: string;
+    description: string;
+    icon: React.ReactNode;
+    onClick: () => void;
+    isHovered: boolean;
+    setHovered: (value: boolean) => void;
   }) => (
-    <Paper
-      component={motion.div}
+    <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ scale: 1.02 }}
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
-      onClick={onClick}
-      sx={{
-        position: 'relative',
-        p: 4,
-        cursor: 'pointer',
-        bgcolor: 'rgba(0,0,0,0.6)',
-        backdropFilter: 'blur(10px)',
-        border: '1px solid',
-        borderColor: isHovered ? '#ff0000' : 'rgba(255,255,255,0.1)',
-        borderRadius: 2,
-        overflow: 'hidden',
-        transition: 'all 0.3s ease',
-      }}
     >
+      <Paper
+        onClick={onClick}
+        sx={{
+          position: 'relative',
+          p: 4,
+          cursor: 'pointer',
+          bgcolor: 'rgba(0,0,0,0.6)',
+          backdropFilter: 'blur(10px)',
+          border: '1px solid',
+          borderColor: isHovered ? '#ff0000' : 'rgba(255,255,255,0.1)',
+          borderRadius: 2,
+          overflow: 'hidden',
+          transition: 'all 0.3s ease',
+        }}
+      >
       {/* Animated gradient background */}
       <Box
         component={motion.div}
@@ -117,9 +155,10 @@ export default function AIJourneyModal() {
         </Button>
       </Box>
     </Paper>
+    </motion.div>
   );
 
-  return (
+  const content = (
     <Container maxWidth="lg" sx={{ py: 8 }}>
       <Box
         component={motion.div}
@@ -173,7 +212,7 @@ export default function AIJourneyModal() {
               }} 
             />
           }
-          onClick={() => router.push('/dashboard/conventional')}
+          onClick={handleConventionalClick}
           isHovered={isHoveredConventional}
           setHovered={setIsHoveredConventional}
         />
@@ -189,11 +228,38 @@ export default function AIJourneyModal() {
               }} 
             />
           }
-          onClick={() => router.push('/dashboard/ai')}
+          onClick={handleAIClick}
           isHovered={isHoveredAI}
           setHovered={setIsHoveredAI}
         />
       </Box>
     </Container>
   );
+
+  if (onClose) {
+    return (
+      <Dialog 
+        open={open} 
+        onClose={onClose}
+        maxWidth="lg"
+        fullWidth
+        PaperProps={{
+          sx: {
+            bgcolor: '#000',
+            backgroundImage: 'linear-gradient(135deg, #000000 0%, #1a1a1a 100%)',
+          }
+        }}
+      >
+        <DialogContent sx={{ p: 0 }}>
+          {content}
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
+  if (!open) {
+    return null;
+  }
+
+  return content;
 }

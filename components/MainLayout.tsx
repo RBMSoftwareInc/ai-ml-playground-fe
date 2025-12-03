@@ -418,7 +418,7 @@ export default function MainLayout() {
         <Header
           themeOptions={themeOptionList}
           themeKey={themeKey}
-          onThemeChange={setThemeKey}
+          onThemeChange={(key) => setThemeKey(key as ThemeKey)}
         />
         <ModernNavigation
           sections={navSections}

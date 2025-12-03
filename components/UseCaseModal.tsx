@@ -105,20 +105,23 @@ export default function UseCaseModal({
       {open && (
         <>
           {/* Backdrop */}
-          <Backdrop
-            component={motion.div}
-            variants={backdropVariants}
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-            open={open}
-            onClick={onClose}
-            sx={{
-              zIndex: 1300,
-              backgroundColor: 'rgba(0, 0, 0, 0.85)',
-              backdropFilter: 'blur(8px)',
-            }}
-          />
+          <div onClick={onClose} style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 1300, cursor: 'pointer' }}>
+            <motion.div
+              variants={backdropVariants}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                backgroundColor: 'rgba(0, 0, 0, 0.85)',
+                backdropFilter: 'blur(8px)',
+              }}
+            />
+          </div>
 
           {/* Modal */}
           <Box

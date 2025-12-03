@@ -1,16 +1,13 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
-  Box, Typography, Paper, Grid, Button, CircularProgress
+  Box, Typography
 } from '@mui/material';
-import MainLayout from '../../components/MainLayout';
 import { useRouter } from 'next/navigation';
 import AIJourneyModal from '../../components/AIJourneyModal';
 
 export default function DashboardPage() {
-  const [userData, setUserData] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   const [showModal, setShowModal] = useState(true);
@@ -27,13 +24,6 @@ export default function DashboardPage() {
     // Optionally clear local storage or state
     router.push('/');
   };
-
-  const renderInfoItem = (label: string, value: any) => (
-    <Grid item xs={12} sm={6} md={4}>
-      <Typography variant="subtitle2" color="text.secondary">{label}</Typography>
-      <Typography variant="body1" fontWeight="medium">{value || '—'}</Typography>
-    </Grid>
-  );
 
   return (
 

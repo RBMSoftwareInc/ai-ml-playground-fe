@@ -7,7 +7,7 @@ import DatasetViewer from '../forms/DatasetViewer';
 import InsightsPanel from '../forms/InsightsPanel';
 import CopilotPanel from '../forms/AskGene';
 import DemoPlayer from '../forms/DemoPlayer';
-import { Paper, Typography, TextField, Button, Grid, MenuItem } from '@mui/material';
+import { Paper, Typography, TextField, Button, Box, MenuItem } from '@mui/material';
 import { postJson } from '../../lib/api';
 
 const sentimentTheory = `
@@ -29,8 +29,14 @@ function SentimentForm({ onSubmit, loading }: { onSubmit: (payload: any) => void
 
   return (
     <Paper sx={{ p: 3, borderRadius: 4, border: '1px solid rgba(255,255,255,0.08)', backgroundColor: 'rgba(255,255,255,0.02)' }}>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)' },
+          gap: 2,
+        }}
+      >
+        <Box>
           <TextField
             select
             label="Channel"
@@ -44,8 +50,8 @@ function SentimentForm({ onSubmit, loading }: { onSubmit: (payload: any) => void
               </MenuItem>
             ))}
           </TextField>
-        </Grid>
-        <Grid item xs={12} sm={6}>
+        </Box>
+        <Box>
           <TextField
             select
             label="Language"
@@ -59,8 +65,8 @@ function SentimentForm({ onSubmit, loading }: { onSubmit: (payload: any) => void
               </MenuItem>
             ))}
           </TextField>
-        </Grid>
-        <Grid item xs={12}>
+        </Box>
+        <Box sx={{ gridColumn: { xs: '1 / -1', sm: '1 / -1' } }}>
           <TextField
             label="Sample Review"
             value={payload.review_text}
@@ -69,8 +75,8 @@ function SentimentForm({ onSubmit, loading }: { onSubmit: (payload: any) => void
             minRows={4}
             fullWidth
           />
-        </Grid>
-        <Grid item xs={12}>
+        </Box>
+        <Box sx={{ gridColumn: { xs: '1 / -1', sm: '1 / -1' } }}>
           <TextField
             select
             label="Contains Media"
@@ -84,8 +90,8 @@ function SentimentForm({ onSubmit, loading }: { onSubmit: (payload: any) => void
               </MenuItem>
             ))}
           </TextField>
-        </Grid>
-        <Grid item xs={12}>
+        </Box>
+        <Box sx={{ gridColumn: { xs: '1 / -1', sm: '1 / -1' } }}>
           <Button
             variant="contained"
             onClick={() => onSubmit(payload)}
@@ -94,8 +100,8 @@ function SentimentForm({ onSubmit, loading }: { onSubmit: (payload: any) => void
           >
             {loading ? 'Analyzing…' : 'Analyze Sentiment'}
           </Button>
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
     </Paper>
   );
 }

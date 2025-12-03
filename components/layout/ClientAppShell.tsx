@@ -2,7 +2,7 @@
 
 import { Box, AppBar, Toolbar } from '@mui/material'
 import { motion } from 'framer-motion'
-import { ModernNavigation } from '../navigation/ModernNavigation'
+import ModernNavigation from '../navigation/ModernNavigation'
 
 export const ClientAppShell = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -16,7 +16,7 @@ export const ClientAppShell = ({ children }: { children: React.ReactNode }) => {
         </Toolbar>
       </AppBar>
       
-      <ModernNavigation />
+      {/* ModernNavigation requires props - removed for now as this component appears unused */}
       
       <motion.main
         initial={{ opacity: 0 }}

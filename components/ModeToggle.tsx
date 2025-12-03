@@ -18,7 +18,7 @@ export default function ModeSwitcher() {
     if (newMode) {
 
       if(newMode === 'ai') {
-        router.push('/dashboard/ask-gene')
+        router.push('/dashboard/ai')
       } else if(newMode === 'classic') {
         router.push('/dashboard/conventional')
       } else {

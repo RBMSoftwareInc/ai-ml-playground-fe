@@ -7,7 +7,7 @@ import DatasetViewer from '../forms/DatasetViewer';
 import InsightsPanel from '../forms/InsightsPanel';
 import CopilotPanel from '../forms/AskGene';
 import DemoPlayer from '../forms/DemoPlayer';
-import { Paper, Typography, Grid, TextField, MenuItem, Button } from '@mui/material';
+import { Paper, Typography, Box, TextField, MenuItem, Button } from '@mui/material';
 import { postJson } from '../../lib/api';
 
 const quizTheory = `
@@ -29,11 +29,17 @@ function QuizForm({ onSubmit, loading }: { onSubmit: (payload: any) => void; loa
 
   return (
     <Paper sx={{ p: 3, borderRadius: 4, border: '1px solid rgba(255,255,255,0.08)', backgroundColor: 'rgba(255,255,255,0.02)' }}>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)' },
+          gap: 2,
+        }}
+      >
+        <Box>
           <TextField label="Quiz Name" value={payload.quiz_name} onChange={(e) => handleChange('quiz_name', e.target.value)} fullWidth />
-        </Grid>
-        <Grid item xs={12} sm={6}>
+        </Box>
+        <Box>
           <TextField
             type="number"
             label="Questions"
@@ -41,8 +47,8 @@ function QuizForm({ onSubmit, loading }: { onSubmit: (payload: any) => void; loa
             onChange={(e) => handleChange('number_of_questions', Number(e.target.value))}
             fullWidth
           />
-        </Grid>
-        <Grid item xs={12} sm={6}>
+        </Box>
+        <Box>
           <TextField
             select
             label="Recommendation Type"
@@ -54,8 +60,8 @@ function QuizForm({ onSubmit, loading }: { onSubmit: (payload: any) => void; loa
               <MenuItem key={opt} value={opt}>{opt}</MenuItem>
             ))}
           </TextField>
-        </Grid>
-        <Grid item xs={12} sm={6}>
+        </Box>
+        <Box>
           <TextField
             select
             label="Data Destination"
@@ -67,13 +73,13 @@ function QuizForm({ onSubmit, loading }: { onSubmit: (payload: any) => void; loa
               <MenuItem key={opt} value={opt}>{opt}</MenuItem>
             ))}
           </TextField>
-        </Grid>
-        <Grid item xs={12}>
+        </Box>
+        <Box sx={{ gridColumn: { xs: '1 / -1', sm: '1 / -1' } }}>
           <Button variant="contained" onClick={() => onSubmit(payload)} disabled={loading} sx={{ minWidth: 200, py: 1.4, fontWeight: 600 }}>
             {loading ? 'Planning…' : 'Generate Quiz Blueprint'}
           </Button>
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
     </Paper>
   );
 }

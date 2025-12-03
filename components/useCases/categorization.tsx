@@ -7,7 +7,7 @@ import DatasetViewer from '../forms/DatasetViewer';
 import InsightsPanel from '../forms/InsightsPanel';
 import CopilotPanel from '../forms/AskGene';
 import DemoPlayer from '../forms/DemoPlayer';
-import { Paper, Typography, TextField, Grid, MenuItem, Button } from '@mui/material';
+import { Paper, Typography, TextField, Box, MenuItem, Button } from '@mui/material';
 import { postJson } from '../../lib/api';
 
 const categorizationTheory = `
@@ -31,11 +31,17 @@ function CategorizationForm({ onSubmit, loading }: { onSubmit: (payload: any) =>
 
   return (
     <Paper sx={{ p: 3, borderRadius: 4, border: '1px solid rgba(255,255,255,0.08)', backgroundColor: 'rgba(255,255,255,0.02)' }}>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)' },
+          gap: 2,
+        }}
+      >
+        <Box>
           <TextField label="SKU" value={payload.sku} onChange={(e) => handleChange('sku', e.target.value)} fullWidth />
-        </Grid>
-        <Grid item xs={12} sm={6}>
+        </Box>
+        <Box>
           <TextField
             select
             label="Taxonomy"
@@ -49,16 +55,16 @@ function CategorizationForm({ onSubmit, loading }: { onSubmit: (payload: any) =>
               </MenuItem>
             ))}
           </TextField>
-        </Grid>
-        <Grid item xs={12}>
+        </Box>
+        <Box sx={{ gridColumn: { xs: '1 / -1', sm: '1 / -1' } }}>
           <TextField
             label="Product Title"
             value={payload.title}
             onChange={(e) => handleChange('title', e.target.value)}
             fullWidth
           />
-        </Grid>
-        <Grid item xs={12}>
+        </Box>
+        <Box sx={{ gridColumn: { xs: '1 / -1', sm: '1 / -1' } }}>
           <TextField
             label="Long Description"
             value={payload.description}
@@ -67,8 +73,8 @@ function CategorizationForm({ onSubmit, loading }: { onSubmit: (payload: any) =>
             multiline
             minRows={4}
           />
-        </Grid>
-        <Grid item xs={12} sm={6}>
+        </Box>
+        <Box>
           <TextField
             select
             label="Target Gender"
@@ -82,8 +88,8 @@ function CategorizationForm({ onSubmit, loading }: { onSubmit: (payload: any) =>
               </MenuItem>
             ))}
           </TextField>
-        </Grid>
-        <Grid item xs={12} sm={6}>
+        </Box>
+        <Box>
           <TextField
             label="Key Materials"
             value={payload.material}
@@ -91,8 +97,8 @@ function CategorizationForm({ onSubmit, loading }: { onSubmit: (payload: any) =>
             placeholder="e.g. Organic cotton, recycled nylon"
             fullWidth
           />
-        </Grid>
-        <Grid item xs={12}>
+        </Box>
+        <Box sx={{ gridColumn: { xs: '1 / -1', sm: '1 / -1' } }}>
           <Button
             variant="contained"
             onClick={() => onSubmit(payload)}
@@ -101,8 +107,8 @@ function CategorizationForm({ onSubmit, loading }: { onSubmit: (payload: any) =>
           >
             {loading ? 'Classifying…' : 'Classify Product'}
           </Button>
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
     </Paper>
   );
 }

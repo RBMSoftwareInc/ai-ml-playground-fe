@@ -11,7 +11,6 @@ import {
   Paper,
   Typography,
   TextField,
-  Grid,
   RadioGroup,
   FormControlLabel,
   Radio,
@@ -39,16 +38,22 @@ function CopyForm({ onSubmit, loading }: { onSubmit: (payload: any) => void; loa
 
   return (
     <Paper sx={{ p: 3, borderRadius: 4, border: '1px solid rgba(255,255,255,0.08)', backgroundColor: 'rgba(255,255,255,0.02)' }}>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)' },
+          gap: 2,
+        }}
+      >
+        <Box>
           <TextField
             label="Product Type"
             value={payload.product_type}
             onChange={(e) => handleChange('product_type', e.target.value)}
             fullWidth
           />
-        </Grid>
-        <Grid item xs={12} sm={6}>
+        </Box>
+        <Box>
           <TextField
             label="Channel"
             value={payload.channel}
@@ -56,8 +61,8 @@ function CopyForm({ onSubmit, loading }: { onSubmit: (payload: any) => void; loa
             placeholder="Web PDP, Marketplace, App Card..."
             fullWidth
           />
-        </Grid>
-        <Grid item xs={12}>
+        </Box>
+        <Box sx={{ gridColumn: { xs: '1 / -1', sm: '1 / -1' } }}>
           <TextField
             label="Key Attributes"
             value={payload.attributes}
@@ -67,8 +72,8 @@ function CopyForm({ onSubmit, loading }: { onSubmit: (payload: any) => void; loa
             fullWidth
             placeholder="e.g. Organic cotton, machine washable, built-in stretch"
           />
-        </Grid>
-        <Grid item xs={12}>
+        </Box>
+        <Box sx={{ gridColumn: { xs: '1 / -1', sm: '1 / -1' } }}>
           <Typography variant="subtitle2" sx={{ mb: 1 }}>
             Tone
           </Typography>
@@ -81,8 +86,8 @@ function CopyForm({ onSubmit, loading }: { onSubmit: (payload: any) => void; loa
               <FormControlLabel key={opt} value={opt} control={<Radio />} label={opt} />
             ))}
           </RadioGroup>
-        </Grid>
-        <Grid item xs={12}>
+        </Box>
+        <Box sx={{ gridColumn: { xs: '1 / -1', sm: '1 / -1' } }}>
           <Button
             variant="contained"
             onClick={() => onSubmit(payload)}
@@ -91,8 +96,8 @@ function CopyForm({ onSubmit, loading }: { onSubmit: (payload: any) => void; loa
           >
             {loading ? 'Generating…' : 'Generate Copy'}
           </Button>
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
     </Paper>
   );
 }

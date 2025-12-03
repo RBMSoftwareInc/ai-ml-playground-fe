@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Box, Typography, Container, Grid, Paper, alpha, IconButton, Tooltip } from '@mui/material';
+import { Box, Typography, Container, Paper, alpha, IconButton, Tooltip } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useTypewriter } from '../components/hooks/useTypewriter';
@@ -441,15 +441,19 @@ export default function HomePage() {
           initial="hidden"
           animate="visible"
         >
-          <Grid container spacing={3}>
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: { 
+                xs: '1fr', 
+                sm: 'repeat(2, 1fr)', 
+                md: columns === 3 ? 'repeat(3, 1fr)' : 'repeat(4, 1fr)' 
+              },
+              gap: 3,
+            }}
+          >
             {industries.map((industry) => (
-              <Grid 
-                item 
-                xs={12} 
-                sm={6} 
-                md={columns === 3 ? 4 : 3} 
-                key={industry.id}
-              >
+              <Box key={industry.id}>
                 <motion.div variants={itemVariants}>
                   <MotionPaper
                     onClick={() => handleIndustryClick(industry)}
@@ -629,9 +633,9 @@ export default function HomePage() {
                     </Box>
                   </MotionPaper>
                 </motion.div>
-              </Grid>
+              </Box>
             ))}
-          </Grid>
+          </Box>
         </motion.div>
 
         {/* Footer */}

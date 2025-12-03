@@ -19,7 +19,7 @@ const sizeData = {
 };
 
 export default function ProductSizeStep({ formData, onChange }: any) {
-  const currentUnit = formData.unit_system || 'metric';
+  const currentUnit: 'metric' | 'imperial' = (formData.unit_system || 'metric') as 'metric' | 'imperial';
 
   const handleUnitChange = (_: any, newUnit: string) => {
     if (newUnit) onChange('unit_system', newUnit);

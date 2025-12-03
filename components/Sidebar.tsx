@@ -1,7 +1,7 @@
 'use client';
 
 import {
-  Drawer, List, ListSubheader, ListItem, ListItemText,
+  Drawer, List, ListSubheader, ListItem, ListItemButton, ListItemText,
   Box
 } from '@mui/material';
 
@@ -152,9 +152,8 @@ export default function Sidebar({ activeCategory, activeTab, onSelectTab }: Side
         }
       >
         {section.items.map((item) => (
-          <ListItem
+          <ListItemButton
             key={item.key}
-            button
             selected={activeTab === item.key}
             onClick={() => onSelectTab(item.key)}
             sx={{
@@ -175,7 +174,7 @@ export default function Sidebar({ activeCategory, activeTab, onSelectTab }: Side
             }}
           >
             <ListItemText primary={item.label} sx={{ pl: 1 }} />
-          </ListItem>
+          </ListItemButton>
         ))}
       </List>
     </Drawer>

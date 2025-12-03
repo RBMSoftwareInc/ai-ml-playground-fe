@@ -7,7 +7,7 @@ import DatasetViewer from '../forms/DatasetViewer';
 import InsightsPanel from '../forms/InsightsPanel';
 import CopilotPanel from '../forms/AskGene';
 import DemoPlayer from '../forms/DemoPlayer';
-import { Paper, Typography, Grid, TextField, MenuItem, Slider, Button } from '@mui/material';
+import { Paper, Typography, Box, TextField, MenuItem, Slider, Button } from '@mui/material';
 import { postJson } from '../../lib/api';
 
 const spinTheory = `
@@ -30,18 +30,24 @@ function SpinForm({ onSubmit, loading }: { onSubmit: (payload: any) => void; loa
 
   return (
     <Paper sx={{ p: 3, borderRadius: 4, border: '1px solid rgba(255,255,255,0.08)', backgroundColor: 'rgba(255,255,255,0.02)' }}>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)' },
+          gap: 2,
+        }}
+      >
+        <Box>
           <TextField label="Campaign Name" value={payload.campaign} onChange={(e) => handleChange('campaign', e.target.value)} fullWidth />
-        </Grid>
-        <Grid item xs={12} sm={6}>
+        </Box>
+        <Box>
           <TextField select label="Prize Pool" value={payload.prize_pool} onChange={(e) => handleChange('prize_pool', e.target.value)} fullWidth>
             {['Store Credit', 'Free Shipping', 'Gift Item', 'Mystery Box'].map(opt => (
               <MenuItem key={opt} value={opt}>{opt}</MenuItem>
             ))}
           </TextField>
-        </Grid>
-        <Grid item xs={12} sm={6}>
+        </Box>
+        <Box>
           <TextField
             label="Daily Spin Limit"
             type="number"
@@ -49,8 +55,8 @@ function SpinForm({ onSubmit, loading }: { onSubmit: (payload: any) => void; loa
             onChange={(e) => handleChange('daily_limit', Number(e.target.value))}
             fullWidth
           />
-        </Grid>
-        <Grid item xs={12}>
+        </Box>
+        <Box sx={{ gridColumn: { xs: '1 / -1', sm: '1 / -1' } }}>
           <Typography variant="subtitle2" sx={{ mb: 1 }}>Win Probability (%)</Typography>
           <Slider
             min={1}
@@ -60,8 +66,8 @@ function SpinForm({ onSubmit, loading }: { onSubmit: (payload: any) => void; loa
             valueLabelDisplay="auto"
             marks
           />
-        </Grid>
-        <Grid item xs={12}>
+        </Box>
+        <Box sx={{ gridColumn: { xs: '1 / -1', sm: '1 / -1' } }}>
           <TextField
             select
             label="Eligibility"
@@ -73,13 +79,13 @@ function SpinForm({ onSubmit, loading }: { onSubmit: (payload: any) => void; loa
               <MenuItem key={opt} value={opt}>{opt}</MenuItem>
             ))}
           </TextField>
-        </Grid>
-        <Grid item xs={12}>
+        </Box>
+        <Box sx={{ gridColumn: { xs: '1 / -1', sm: '1 / -1' } }}>
           <Button variant="contained" onClick={() => onSubmit(payload)} disabled={loading} sx={{ minWidth: 200, py: 1.4, fontWeight: 600 }}>
             {loading ? 'Calibrating…' : 'Generate Spin Blueprint'}
           </Button>
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
     </Paper>
   );
 }

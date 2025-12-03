@@ -1,6 +1,6 @@
 'use client'
 
-import { Box, Typography, Grid, Button } from '@mui/material'
+import { Box, Typography, Button } from '@mui/material'
 
 const storeTypes = [
   { value: 'fashion', label: '🧪 Fashion & Apparel' },
@@ -36,9 +36,15 @@ export default function StoreTypeStep({ formData, onChange }: any) {
     <Box>
       <Typography variant="h6" mb={3} fontWeight="bold">🛍️ Select Store Type</Typography>
 
-      <Grid container spacing={2}>
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: { xs: 'repeat(2, 1fr)', sm: 'repeat(3, 1fr)', md: 'repeat(4, 1fr)' },
+          gap: 2,
+        }}
+      >
         {storeTypes.map((store) => (
-          <Grid item xs={6} sm={4} md={3} key={store.value}>
+          <Box key={store.value}>
             <Button
               fullWidth
               onClick={() => onChange('store_type', store.value)}
@@ -60,9 +66,9 @@ export default function StoreTypeStep({ formData, onChange }: any) {
             >
               {store.label}
             </Button>
-          </Grid>
+          </Box>
         ))}
-      </Grid>
+      </Box>
     </Box>
   )
 }

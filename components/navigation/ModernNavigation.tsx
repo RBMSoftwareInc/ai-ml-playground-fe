@@ -3,6 +3,7 @@ import {
   Box,
   List,
   ListItem,
+  ListItemButton,
   ListItemText,
   ListItemIcon,
   Collapse,
@@ -70,8 +71,7 @@ export default function ModernNavigation({
       <List component="nav" sx={{ px: 2 }}>
         {sections.map((section) => (
           <Box key={section.title} sx={{ mb: 1 }}>
-            <ListItem
-              button
+            <ListItemButton
               onClick={() => onCategoryChange(section.title)}
               sx={{
                 borderRadius: 2,
@@ -111,14 +111,13 @@ export default function ModernNavigation({
                 }
               />
               {activeCategory === section.title ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
+            </ListItemButton>
 
             <Collapse in={activeCategory === section.title} timeout="auto">
               <List component="div" disablePadding>
                 {section.items.map((item: any) => (
-                  <ListItem
+                  <ListItemButton
                     key={item.key}
-                    button
                     onClick={() => onTabChange(item.key)}
                     sx={{
                       pl: 5,
@@ -151,7 +150,7 @@ export default function ModernNavigation({
                         </Typography>
                       }
                     />
-                  </ListItem>
+                  </ListItemButton>
                 ))}
               </List>
             </Collapse>

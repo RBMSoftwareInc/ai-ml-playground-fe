@@ -12,7 +12,6 @@ import {
   Paper,
   Typography,
   TextField,
-  Grid,
   MenuItem,
   Button,
   Slider,
@@ -39,8 +38,14 @@ function TryOnForm({ onSubmit, loading }: { onSubmit: (payload: any) => void; lo
 
   return (
     <Paper sx={{ p: 3, borderRadius: 4, border: '1px solid rgba(255,255,255,0.08)', backgroundColor: 'rgba(255,255,255,0.02)' }}>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)' },
+          gap: 2,
+        }}
+      >
+        <Box>
           <TextField
             select
             label="Garment Type"
@@ -54,16 +59,16 @@ function TryOnForm({ onSubmit, loading }: { onSubmit: (payload: any) => void; lo
               </MenuItem>
             ))}
           </TextField>
-        </Grid>
-        <Grid item xs={12} sm={6}>
+        </Box>
+        <Box>
           <TextField
             label="Garment SKU"
             value={payload.garment_sku}
             onChange={(e) => handleChange('garment_sku', e.target.value)}
             fullWidth
           />
-        </Grid>
-        <Grid item xs={12} sm={6}>
+        </Box>
+        <Box>
           <TextField
             select
             label="Input Device"
@@ -77,8 +82,8 @@ function TryOnForm({ onSubmit, loading }: { onSubmit: (payload: any) => void; lo
               </MenuItem>
             ))}
           </TextField>
-        </Grid>
-        <Grid item xs={12} sm={6}>
+        </Box>
+        <Box>
           <TextField
             select
             label="Export Format"
@@ -92,8 +97,8 @@ function TryOnForm({ onSubmit, loading }: { onSubmit: (payload: any) => void; lo
               </MenuItem>
             ))}
           </TextField>
-        </Grid>
-        <Grid item xs={12}>
+        </Box>
+        <Box sx={{ gridColumn: { xs: '1 / -1', sm: '1 / -1' } }}>
           <Typography variant="subtitle2" sx={{ mb: 1 }}>
             Latency Target (seconds)
           </Typography>
@@ -106,8 +111,8 @@ function TryOnForm({ onSubmit, loading }: { onSubmit: (payload: any) => void; lo
             valueLabelDisplay="auto"
             onChange={(_, value) => handleChange('latency', value)}
           />
-        </Grid>
-        <Grid item xs={12}>
+        </Box>
+        <Box sx={{ gridColumn: { xs: '1 / -1', sm: '1 / -1' } }}>
           <Button
             variant="contained"
             onClick={() => onSubmit(payload)}
@@ -116,8 +121,8 @@ function TryOnForm({ onSubmit, loading }: { onSubmit: (payload: any) => void; lo
           >
             {loading ? 'Rendering…' : 'Preview Try-On'}
           </Button>
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
     </Paper>
   );
 }

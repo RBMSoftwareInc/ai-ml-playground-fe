@@ -7,7 +7,7 @@ import DatasetViewer from '../forms/DatasetViewer';
 import InsightsPanel from '../forms/InsightsPanel';
 import CopilotPanel from '../forms/AskGene';
 import DemoPlayer from '../forms/DemoPlayer';
-import { Paper, Typography, List, ListItem, TextField, Grid, Button } from '@mui/material';
+import { Paper, Typography, List, ListItem, TextField, Box, Button, MenuItem } from '@mui/material';
 import { postJson } from '../../lib/api';
 
 const iqTheory = `
@@ -29,8 +29,14 @@ function IQForm({ onSubmit, loading }: { onSubmit: (payload: any) => void; loadi
 
   return (
     <Paper sx={{ p: 3, borderRadius: 4, border: '1px solid rgba(255,255,255,0.08)', backgroundColor: 'rgba(255,255,255,0.02)' }}>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)' },
+          gap: 2,
+        }}
+      >
+        <Box>
           <TextField
             select
             label="Game Type"
@@ -43,18 +49,18 @@ function IQForm({ onSubmit, loading }: { onSubmit: (payload: any) => void; loadi
               <MenuItem key={opt} value={opt}>{opt}</MenuItem>
             ))}
           </TextField>
-        </Grid>
-        <Grid item xs={12} sm={6}>
+        </Box>
+        <Box>
           <TextField label="Reward" value={payload.reward} onChange={(e) => handleChange('reward', e.target.value)} fullWidth />
-        </Grid>
-        <Grid item xs={12} sm={6}>
+        </Box>
+        <Box>
           <TextField select label="Difficulty" value={payload.difficulty} onChange={(e) => handleChange('difficulty', e.target.value)} fullWidth>
             {['Adaptive', 'Beginner', 'Pro'].map(opt => (
               <MenuItem key={opt} value={opt}>{opt}</MenuItem>
             ))}
           </TextField>
-        </Grid>
-        <Grid item xs={12} sm={6}>
+        </Box>
+        <Box>
           <TextField
             type="number"
             label="Timer (seconds)"
@@ -62,13 +68,13 @@ function IQForm({ onSubmit, loading }: { onSubmit: (payload: any) => void; loadi
             onChange={(e) => handleChange('timer_seconds', Number(e.target.value))}
             fullWidth
           />
-        </Grid>
-        <Grid item xs={12}>
+        </Box>
+        <Box sx={{ gridColumn: { xs: '1 / -1', sm: '1 / -1' } }}>
           <Button variant="contained" onClick={() => onSubmit(payload)} disabled={loading} sx={{ minWidth: 200, py: 1.4, fontWeight: 600 }}>
             {loading ? 'Building…' : 'Build Game Blueprint'}
           </Button>
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
     </Paper>
   );
 }

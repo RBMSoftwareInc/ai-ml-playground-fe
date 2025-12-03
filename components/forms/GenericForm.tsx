@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useMemo, useState } from 'react'
-import { Box, Grid, TextField, MenuItem, Button, CircularProgress } from '@mui/material'
+import { Box, TextField, MenuItem, Button, CircularProgress } from '@mui/material'
 
 type FieldConfig = { name: string, label: string, type: string, options?: string[] }
 
@@ -30,16 +30,22 @@ export default function GenericForm({
     setFormData(initialState)
   }, [initialState])
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value }))
   }
 
   return (
     <Box component="form" sx={{ mt: 2 }}>
-      <Grid container spacing={2}>
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)' },
+          gap: 2,
+        }}
+      >
         {fields.map((field) => (
-          <Grid item xs={12} sm={6} key={field.name}>
+          <Box key={field.name}>
             {field.options ? (
               <TextField
                 select
@@ -76,9 +82,9 @@ export default function GenericForm({
                 }}
               />
             )}
-          </Grid>
+          </Box>
         ))}
-        <Grid item xs={12}>
+        <Box sx={{ gridColumn: { xs: '1 / -1', sm: '1 / -1' } }}>
           <Button
             variant="contained"
             color="primary"
@@ -88,8 +94,8 @@ export default function GenericForm({
           >
             {loading ? <CircularProgress size={24} /> : '🚀 Predict'}
           </Button>
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
     </Box>
   )
 }

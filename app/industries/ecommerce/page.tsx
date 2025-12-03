@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Box, Typography, Container, Grid, Paper, alpha, IconButton, Chip, Tooltip } from '@mui/material';
+import { Box, Typography, Container, Paper, alpha, IconButton, Chip, Tooltip } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -651,9 +651,15 @@ export default function EcommercePage() {
 
         {/* Categories Grid */}
         <motion.div variants={containerVariants} initial="hidden" animate="visible">
-          <Grid container spacing={3}>
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)' },
+              gap: 3,
+            }}
+          >
             {categories.map((category) => (
-              <Grid item xs={12} md={6} lg={4} key={category.title}>
+              <Box key={category.title}>
                 <motion.div variants={itemVariants}>
                   <Paper
                     onMouseEnter={() => setHoveredCategory(category.title)}
@@ -785,9 +791,9 @@ export default function EcommercePage() {
                     </Box>
                   </Paper>
                 </motion.div>
-              </Grid>
+              </Box>
             ))}
-          </Grid>
+          </Box>
         </motion.div>
 
         {/* CMS Section - Hidden in UI but code preserved */}
