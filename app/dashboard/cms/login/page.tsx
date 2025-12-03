@@ -131,16 +131,20 @@ export default function IQLoginPage() {
 
         const assertion = await navigator.credentials.get({ publicKey });
 
+        if (!assertion) throw new Error('No assertion received');
+        const publicKeyCredential = assertion as PublicKeyCredential;
+        const authenticatorAssertionResponse = publicKeyCredential.response as AuthenticatorAssertionResponse;
+
         const credential = {
-          id: assertion.id,
-          rawId: bufferEncode(assertion.rawId),
-          type: assertion.type,
+          id: publicKeyCredential.id,
+          rawId: bufferEncode(new Uint8Array(publicKeyCredential.rawId)),
+          type: publicKeyCredential.type,
           response: {
-            authenticatorData: bufferEncode(assertion.response.authenticatorData),
-            clientDataJSON: bufferEncode(assertion.response.clientDataJSON),
-            signature: bufferEncode(assertion.response.signature),
-            userHandle: assertion.response.userHandle
-              ? bufferEncode(assertion.response.userHandle)
+            authenticatorData: bufferEncode(new Uint8Array(authenticatorAssertionResponse.authenticatorData)),
+            clientDataJSON: bufferEncode(new Uint8Array(authenticatorAssertionResponse.clientDataJSON)),
+            signature: bufferEncode(new Uint8Array(authenticatorAssertionResponse.signature)),
+            userHandle: authenticatorAssertionResponse.userHandle
+              ? bufferEncode(new Uint8Array(authenticatorAssertionResponse.userHandle))
               : null,
           },
           state_id: options.state_id,
