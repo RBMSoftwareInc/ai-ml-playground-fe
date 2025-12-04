@@ -1,13 +1,11 @@
 'use client';
 
-import { useState } from 'react';
-import { Box, Typography, Container, Paper, alpha, IconButton, Tooltip } from '@mui/material';
-import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { Box, Typography, Container, Paper, alpha, IconButton, Tooltip, Button, Chip } from '@mui/material';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
-import { useTypewriter } from '../components/hooks/useTypewriter';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import ExploreIcon from '@mui/icons-material/Explore';
+import ModeSwitcher from '../components/ModeSwitcher';
 import {
   LocalHospital,
   Flight,
@@ -154,19 +152,26 @@ const itemVariants = {
 export default function HomePage() {
   const router = useRouter();
   const [columns, setColumns] = useState<3 | 4>(3);
+  const [headlineIndex, setHeadlineIndex] = useState(0);
+  const [taglineIndex, setTaglineIndex] = useState(0);
 
-  // Typewriter animations
-  const { displayedText: aiPlaygroundText } = useTypewriter({ 
-    text: 'AI Playground', 
-    speed: 80,
-    delay: 300 
-  });
-  
-  const { displayedText: rbmTaglineText } = useTypewriter({ 
-    text: 'RBM → Reimagine. Build. Modernize', 
-    speed: 50,
-    delay: 1500 
-  });
+  // Professional taglines
+  const taglines = [
+    'Reimagine • Build • Modernize',
+    'Where AI Meets Enterprise',
+    'Transforming Business with Intelligence',
+    'Next-Gen AI for Next-Gen Commerce',
+  ];
+
+  // Rotate taglines every 4 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTaglineIndex((prev) => (prev + 1) % taglines.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [taglines.length]);
+
+  const currentTagline = taglines[taglineIndex];
 
   const handleIndustryClick = (industry: Industry) => {
     router.push(industry.route);
@@ -243,8 +248,10 @@ export default function HomePage() {
       />
 
       <Container maxWidth="xl" sx={{ position: 'relative', zIndex: 1 }}>
-        {/* Header */}
-        <Box sx={{ textAlign: 'center', mb: { xs: 4, md: 6 } }}>
+        {/* Header with Switch to AI Mode Button */}
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: { xs: 4, md: 6 } }}>
+          <Box sx={{ flex: 1 }} />
+          <Box sx={{ textAlign: 'center', flex: 2 }}>
           <motion.div
             initial={{ opacity: 0, y: -30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -259,137 +266,129 @@ export default function HomePage() {
                 mb: 3,
               }}
             >
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 3, mb: 2 }}>
                 <Box
                   component="img"
                   src="/images/rbm-logo.svg"
                   alt="RBM"
                   sx={{
-                    height: 56,
+                    height: 64,
                     filter: 'brightness(0) saturate(100%) invert(15%) sepia(100%) saturate(7472%) hue-rotate(0deg) brightness(99%) contrast(118%)',
+                    transition: 'transform 0.3s ease',
+                    '&:hover': {
+                      transform: 'scale(1.08) rotate(2deg)',
+                    },
                   }}
                   onError={(e: any) => {
                     e.target.style.display = 'none';
                   }}
                 />
-                <Typography
-                  variant="h1"
-                  sx={{
-                    fontSize: { xs: '2.5rem', md: '3.5rem' },
-                    fontWeight: 800,
-                    color: '#ffffff',
-                    letterSpacing: '-0.03em',
-                    textShadow: '0 0 60px rgba(239,68,68,0.3)',
-                    fontFamily: '"Inter", "Roboto", sans-serif',
-                    position: 'relative',
-                    '&::after': {
-                      content: '""',
-                      position: 'absolute',
-                      right: -8,
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                      width: 3,
-                      height: '60%',
-                      background: '#ef4444',
-                      animation: 'blink 1s infinite',
-                      '@keyframes blink': {
-                        '0%, 50%': { opacity: 1 },
-                        '51%, 100%': { opacity: 0 },
-                      },
-                    },
-                  }}
-                >
-                  {aiPlaygroundText}
-                </Typography>
+                <Box sx={{ position: 'relative', minHeight: '5rem', display: 'flex', alignItems: 'center' }}>
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={headlineIndex}
+                      initial={{ opacity: 0, y: 30, filter: 'blur(15px)' }}
+                      animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                      exit={{ opacity: 0, y: -30, filter: 'blur(15px)' }}
+                      transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+                    >
+                      <Typography
+                        variant="h1"
+                        sx={{
+                          fontSize: { xs: '2rem', md: '2.5rem', lg: '3rem' },
+                          fontWeight: 600,
+                          letterSpacing: '-0.02em',
+                          fontFamily: '"Inter", "Roboto", sans-serif',
+                          lineHeight: 1.2,
+                          position: 'relative',
+                          display: 'inline-block',
+                        }}
+                      >
+                        <Box
+                          component="span"
+                          sx={{
+                            color: '#ffffff',
+                            position: 'relative',
+                            display: 'inline-block',
+                          }}
+                        >
+                          RBM AI
+                        </Box>
+                        <Box
+                          component="span"
+                          sx={{
+                            ml: 1.5,
+                            color: 'rgba(255,255,255,0.8)',
+                            fontWeight: 500,
+                            position: 'relative',
+                            display: 'inline-block',
+                          }}
+                        >
+                          Playground
+                        </Box>
+                      </Typography>
+                    </motion.div>
+                  </AnimatePresence>
+                </Box>
               </Box>
-              <Typography
-                variant="body1"
-                sx={{
-                  color: 'rgba(255,255,255,0.6)',
-                  fontSize: { xs: '0.9rem', md: '1rem' },
-                  fontWeight: 400,
-                  letterSpacing: '0.05em',
-                  fontFamily: '"Inter", "Roboto", sans-serif',
-                  position: 'relative',
-                  '&::after': {
-                    content: '""',
-                    position: 'absolute',
-                    right: -8,
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    width: 2,
-                    height: '50%',
-                    background: 'rgba(255,255,255,0.5)',
-                    animation: 'blink 1s infinite',
-                    '@keyframes blink': {
-                      '0%, 50%': { opacity: 1 },
-                      '51%, 100%': { opacity: 0 },
-                    },
-                  },
-                }}
-              >
-                {rbmTaglineText}
-              </Typography>
+              <Box sx={{ position: 'relative', minHeight: '2rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={taglineIndex}
+                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                    transition={{ duration: 0.5, ease: 'easeOut' }}
+                  >
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        color: 'rgba(255,255,255,0.6)',
+                        fontSize: { xs: '0.9rem', md: '1rem' },
+                        fontWeight: 400,
+                        letterSpacing: '0.05em',
+                        fontFamily: '"Inter", "Roboto", sans-serif',
+                        position: 'relative',
+                        display: 'inline-block',
+                      }}
+                    >
+                      {currentTagline}
+                    </Typography>
+                  </motion.div>
+                </AnimatePresence>
+              </Box>
             </Box>
           </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-          >
-            <Typography
-              variant="h5"
-              sx={{
-                color: 'rgba(255,255,255,0.7)',
-                fontWeight: 400,
-                maxWidth: 650,
-                mx: 'auto',
-                lineHeight: 1.7,
-                fontSize: { xs: '1rem', md: '1.2rem' },
-              }}
-            >
-              Explore AI/ML solutions across industries — interactive demos, 
-              real-time predictions, and enterprise-ready implementations
-            </Typography>
-          </motion.div>
+          </Box>
+          <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end', pt: 2 }}>
+            <ModeSwitcher />
+          </Box>
         </Box>
 
-        {/* Info Banner */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-        >
-          <Paper
-            sx={{
-              p: 2.5,
-              mb: 4,
-              background: 'rgba(239, 68, 68, 0.06)',
-              border: '1px solid rgba(239, 68, 68, 0.15)',
-              borderRadius: 3,
-              display: 'flex',
-              alignItems: 'center',
-              gap: 2,
-              flexWrap: 'wrap',
-            }}
+          {/* Professional Description */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
           >
-            <InfoOutlinedIcon sx={{ color: '#ef4444', fontSize: 28 }} />
-            <Box sx={{ flex: 1, minWidth: 250 }}>
-              <Typography variant="body1" sx={{ color: '#fff', fontWeight: 600, mb: 0.5 }}>
-                Interactive AI Demos for Every Industry
-              </Typography>
-              <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.6)' }}>
-                Each industry includes multiple AI use cases with live demos, sample data, and production-ready implementations. 
-                Click any tile to explore.
-              </Typography>
-            </Box>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, color: 'rgba(255,255,255,0.5)' }}>
-              <ExploreIcon sx={{ fontSize: 18 }} />
-              <Typography variant="caption">9 Industries • 90+ Use Cases</Typography>
-            </Box>
-          </Paper>
-        </motion.div>
+            <Typography
+              variant="h6"
+              sx={{
+                color: 'rgba(255,255,255,0.9)',
+                fontWeight: 500,
+                maxWidth: '800px',
+                mx: 'auto',
+                lineHeight: 1.8,
+                fontSize: { xs: '1rem', md: '1.15rem' },
+                textAlign: 'center',
+                mb: 6,
+              }}
+            >
+              Enterprise AI solutions powered by advanced machine learning. 
+              Experience interactive simulations, real-time predictions, and production-ready implementations 
+              across 9 industries.
+            </Typography>
+          </motion.div>
 
         {/* Column Toggle */}
         <motion.div
@@ -635,6 +634,106 @@ export default function HomePage() {
                 </motion.div>
               </Box>
             ))}
+          </Box>
+        </motion.div>
+
+        {/* DevLab Featured Card - Centered below Industry Grid */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
+        >
+          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 6, mb: 4 }}>
+            <Paper
+              onClick={() => router.push('/devlab')}
+              sx={{
+                maxWidth: '400px',
+                p: 2.5,
+                bgcolor: 'rgba(255,255,255,0.05)',
+                border: '2px solid rgba(255,255,255,0.1)',
+                borderRadius: 3,
+                cursor: 'pointer',
+                position: 'relative',
+                overflow: 'hidden',
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                  bgcolor: 'rgba(255,255,255,0.08)',
+                  borderColor: 'rgba(255,77,77,0.4)',
+                  transform: 'translateY(-4px)',
+                  boxShadow: '0 8px 24px rgba(255,77,77,0.2)',
+                },
+                '&::before': {
+                  content: '""',
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  height: '3px',
+                  background: 'linear-gradient(90deg, #ff0000, #ff4d4d, transparent)',
+                },
+              }}
+            >
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 1.5 }}>
+                <Box
+                  sx={{
+                    width: 48,
+                    height: 48,
+                    borderRadius: 2,
+                    bgcolor: 'rgba(255,77,77,0.15)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    border: '1px solid rgba(255,77,77,0.3)',
+                    fontSize: '1.5rem',
+                  }}
+                >
+                  💻
+                </Box>
+                <Box sx={{ flex: 1 }}>
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      color: '#fff',
+                      fontWeight: 600,
+                      mb: 0.5,
+                      fontSize: '1.1rem',
+                    }}
+                  >
+                    RBM DevLab
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      color: 'rgba(255,255,255,0.7)',
+                      lineHeight: 1.5,
+                      fontSize: '0.85rem',
+                    }}
+                  >
+                    Developer AI Command Center
+                  </Typography>
+                </Box>
+              </Box>
+              <Button
+                variant="outlined"
+                fullWidth
+                size="small"
+                sx={{
+                  borderColor: 'rgba(255,255,255,0.3)',
+                  color: '#fff',
+                  py: 0.8,
+                  borderRadius: 2,
+                  textTransform: 'none',
+                  fontWeight: 600,
+                  fontSize: '0.875rem',
+                  '&:hover': {
+                    borderColor: '#ff4d4d',
+                    bgcolor: 'rgba(255,77,77,0.1)',
+                  },
+                }}
+              >
+                Open DevLab →
+              </Button>
+            </Paper>
           </Box>
         </motion.div>
 

@@ -5,6 +5,7 @@ import { Box, Container, CircularProgress } from '@mui/material';
 import { usePathname, useRouter } from 'next/navigation';
 import Header from './Header';
 import Footer from './Footer';
+import FloatingDiscoveryLauncher from './FloatingDiscoveryLauncher';
 import { getUseCase } from '../lib/useCases';
 
 interface PageLayoutProps {
@@ -113,7 +114,12 @@ export default function PageLayout({
   
   // Industry pages and ecommerce use case pages handle their own header/footer, so skip here
   if (isIndustryPage || isEcommerceUseCasePage || isDashboardPage || isCMSPage || isHomePage) {
-    return <>{children}</>;
+    return (
+      <>
+        {children}
+        <FloatingDiscoveryLauncher />
+      </>
+    );
   }
 
   return (
@@ -143,6 +149,8 @@ export default function PageLayout({
           {children}
         </Box>
       </Container>
+
+      <FloatingDiscoveryLauncher />
 
       {showFooter && (
         <Box sx={{ mt: 'auto', pt: 4 }}>

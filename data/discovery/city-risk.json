@@ -1,0 +1,27 @@
+{
+  "metadata": {
+    "id": "city-risk",
+    "name": "City Risk Radar",
+    "icon": "🗺️",
+    "description": "Explore cyber and physical risks in cities",
+    "category": "security"
+  },
+  "interaction": {
+    "type": "select",
+    "options": ["Mumbai", "Delhi", "Bangalore", "Chennai", "Hyderabad", "Kolkata", "Pune"],
+    "label": "Select City"
+  },
+  "model": {
+    "message": "Generating risk heatmap for {city}...",
+    "prompt": "Analyze cyber and physical risks for {city} and create a heatmap"
+  },
+  "visualization": {
+    "type": "heatmap",
+    "animation": "spread"
+  },
+  "surprise": {
+    "type": "risk-level",
+    "message": "Risk Level: {level}"
+  }
+}
+

@@ -1,0 +1,133 @@
+{
+  "metadata": {
+    "id": "loss-prevention",
+    "title": "AI Loss Prevention System",
+    "tagline": "Prevent inventory shrinkage and theft in real-time",
+    "icon": "🔒",
+    "industry": "retail"
+  },
+  "businessStory": "Inventory shrinkage was costing ₹2 Cr annually. Our AI system monitors store activity, detects suspicious patterns, and alerts staff in real-time—reducing losses by 45%.",
+  "impact": {
+    "revenue_saved": "₹9.2 Cr / year",
+    "shrinkage_reduction": "45%",
+    "roi": "5 months"
+  },
+  "scenarios": [
+    {
+      "id": "suspicious-behavior",
+      "label": "Suspicious Behavior",
+      "description": "Customer loitering near high-value items, avoiding cameras",
+      "recommended": true,
+      "visualization": "store_heatmap",
+      "decisions": [
+        {
+          "id": "alert",
+          "label": "Alert Staff",
+          "outcome": "theft_prevented"
+        },
+        {
+          "id": "monitor",
+          "label": "Continue Monitoring",
+          "outcome": "ongoing_surveillance"
+        },
+        {
+          "id": "ignore",
+          "label": "Ignore",
+          "outcome": "risk_accepted"
+        }
+      ]
+    },
+    {
+      "id": "sweethearting",
+      "label": "Sweethearting",
+      "description": "Employee scanning items incorrectly at checkout",
+      "recommended": false,
+      "visualization": "checkout_analysis",
+      "decisions": [
+        {
+          "id": "flag",
+          "label": "Flag Transaction",
+          "outcome": "fraud_detected"
+        },
+        {
+          "id": "review",
+          "label": "Review Later",
+          "outcome": "audit_queued"
+        }
+      ]
+    },
+    {
+      "id": "organized-theft",
+      "label": "Organized Theft",
+      "description": "Multiple individuals coordinating theft",
+      "recommended": false,
+      "visualization": "multi_person_tracking",
+      "decisions": [
+        {
+          "id": "lockdown",
+          "label": "Initiate Lockdown",
+          "outcome": "theft_prevented"
+        },
+        {
+          "id": "security",
+          "label": "Call Security",
+          "outcome": "intervention"
+        }
+      ]
+    }
+  ],
+  "pipeline": [
+    {
+      "id": "monitoring",
+      "label": "Store Monitoring",
+      "description": "Real-time video analysis"
+    },
+    {
+      "id": "detection",
+      "label": "Anomaly Detection",
+      "description": "Identify suspicious patterns"
+    },
+    {
+      "id": "scoring",
+      "label": "Risk Scoring",
+      "description": "Calculate threat level"
+    },
+    {
+      "id": "response",
+      "label": "Alert Response",
+      "description": "Notify staff or security"
+    }
+  ],
+  "impactMetrics": {
+    "theft_prevented": {
+      "label": "Theft Prevented",
+      "value": "₹9.2 Cr",
+      "change": "+45%"
+    },
+    "shrinkage_reduction": {
+      "label": "Shrinkage Reduction",
+      "value": "45%",
+      "change": "-32%"
+    },
+    "response_time": {
+      "label": "Alert Time",
+      "value": "3.2s",
+      "change": "-78%"
+    }
+  },
+  "steps": [
+    {
+      "phase": "simulation",
+      "type": "visualization",
+      "title": "Store Heatmap",
+      "description": "Real-time store activity visualization"
+    },
+    {
+      "phase": "simulation",
+      "type": "decision",
+      "title": "Action Decision",
+      "description": "Choose response strategy"
+    }
+  ]
+}
+

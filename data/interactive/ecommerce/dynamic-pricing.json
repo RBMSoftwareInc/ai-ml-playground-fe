@@ -1,0 +1,138 @@
+{
+  "metadata": {
+    "id": "dynamic-pricing",
+    "title": "AI Dynamic Pricing Engine",
+    "tagline": "Optimize prices in real-time to maximize revenue",
+    "icon": "💰",
+    "industry": "ecommerce"
+  },
+  "businessStory": "Competitors were undercutting prices daily. Our AI pricing engine adjusts prices in real-time based on demand, inventory, competitor prices, and market conditions—increasing margins by 18%.",
+  "impact": {
+    "revenue_saved": "₹12.8 Cr / year",
+    "margin_improvement": "18%",
+    "roi": "4 months"
+  },
+  "scenarios": [
+    {
+      "id": "high-demand",
+      "label": "High Demand Scenario",
+      "description": "Product trending, low inventory, competitor price ₹1,299",
+      "recommended": true,
+      "visualization": "price_chart",
+      "decisions": [
+        {
+          "id": "increase",
+          "label": "Increase Price",
+          "outcome": "revenue_optimized"
+        },
+        {
+          "id": "maintain",
+          "label": "Maintain Price",
+          "outcome": "status_quo"
+        },
+        {
+          "id": "decrease",
+          "label": "Decrease Price",
+          "outcome": "volume_increase"
+        }
+      ]
+    },
+    {
+      "id": "low-demand",
+      "label": "Low Demand Scenario",
+      "description": "Slow sales, high inventory, competitor discounting",
+      "recommended": false,
+      "visualization": "demand_curve",
+      "decisions": [
+        {
+          "id": "promote",
+          "label": "Promotional Pricing",
+          "outcome": "clearance_success"
+        },
+        {
+          "id": "bundle",
+          "label": "Bundle Strategy",
+          "outcome": "value_boost"
+        }
+      ]
+    },
+    {
+      "id": "competitive",
+      "label": "Competitive Response",
+      "description": "Competitor just dropped price by 15%",
+      "recommended": false,
+      "visualization": "competitor_tracking",
+      "decisions": [
+        {
+          "id": "match",
+          "label": "Match Price",
+          "outcome": "competitive_match"
+        },
+        {
+          "id": "undercut",
+          "label": "Undercut by 5%",
+          "outcome": "market_lead"
+        },
+        {
+          "id": "hold",
+          "label": "Hold Position",
+          "outcome": "brand_value"
+        }
+      ]
+    }
+  ],
+  "pipeline": [
+    {
+      "id": "data_collection",
+      "label": "Data Collection",
+      "description": "Gather market signals"
+    },
+    {
+      "id": "demand_forecast",
+      "label": "Demand Forecast",
+      "description": "Predict demand patterns"
+    },
+    {
+      "id": "price_optimization",
+      "label": "Price Optimization",
+      "description": "Calculate optimal price"
+    },
+    {
+      "id": "execution",
+      "label": "Price Update",
+      "description": "Deploy new pricing"
+    }
+  ],
+  "impactMetrics": {
+    "revenue_optimized": {
+      "label": "Revenue Increase",
+      "value": "₹12.8 Cr",
+      "change": "+18%"
+    },
+    "margin_improvement": {
+      "label": "Margin Improvement",
+      "value": "18%",
+      "change": "+5.2%"
+    },
+    "price_changes": {
+      "label": "Price Updates",
+      "value": "1,247/day",
+      "change": "+340%"
+    }
+  },
+  "steps": [
+    {
+      "phase": "simulation",
+      "type": "visualization",
+      "title": "Price Chart",
+      "description": "Real-time price optimization visualization"
+    },
+    {
+      "phase": "simulation",
+      "type": "decision",
+      "title": "Pricing Decision",
+      "description": "Choose pricing strategy"
+    }
+  ]
+}
+

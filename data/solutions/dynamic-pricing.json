@@ -1,0 +1,108 @@
+{
+  "id": "dynamic-pricing",
+  "industry": "ecommerce",
+  "title": "AI Dynamic Pricing Engine",
+  "tagline": "Optimize prices in real-time to maximize revenue",
+  "icon": "💰",
+  "impact": {
+    "revenue_saved": "₹12.8 Cr / year",
+    "margin_improvement": "18%",
+    "roi": "4 months"
+  },
+  "business_story": "Competitors were undercutting prices daily. Our AI pricing engine adjusts prices in real-time based on demand, inventory, competitor prices, and market conditions—increasing margins by 18%.",
+  "modes": {
+    "business": {
+      "key_benefits": [
+        "Revenue optimization",
+        "Competitive positioning",
+        "Inventory velocity"
+      ]
+    },
+    "tech": {
+      "models": [
+        "Demand Forecasting",
+        "Price Elasticity",
+        "Reinforcement Learning"
+      ],
+      "trace": true,
+      "tokens": true
+    }
+  },
+  "scenarios": [
+    {
+      "id": "high-demand",
+      "label": "High Demand Scenario",
+      "autoPrompt": "Product trending, low inventory, competitor price ₹1,299",
+      "fields": [
+        {
+          "name": "current_price",
+          "label": "Current Price",
+          "type": "number",
+          "default": 999
+        },
+        {
+          "name": "inventory_level",
+          "label": "Inventory Level",
+          "type": "number",
+          "default": 15
+        },
+        {
+          "name": "competitor_price",
+          "label": "Competitor Price",
+          "type": "number",
+          "default": 1299
+        },
+        {
+          "name": "demand_trend",
+          "label": "Demand Trend",
+          "type": "select",
+          "options": ["High", "Medium", "Low"],
+          "default": "High"
+        }
+      ]
+    },
+    {
+      "id": "clearance",
+      "label": "Clearance Pricing",
+      "autoPrompt": "Slow-moving SKU, 90 days old inventory",
+      "fields": [
+        {
+          "name": "days_in_inventory",
+          "label": "Days in Inventory",
+          "type": "number",
+          "default": 90
+        },
+        {
+          "name": "sales_velocity",
+          "label": "Sales Velocity (units/week)",
+          "type": "number",
+          "default": 2
+        }
+      ]
+    }
+  ],
+  "pipeline": [
+    {
+      "id": "market_analysis",
+      "label": "Market Analysis",
+      "description": "Analyze competitor prices and market trends"
+    },
+    {
+      "id": "demand_forecast",
+      "label": "Demand Forecasting",
+      "description": "Predict demand based on historical data and trends"
+    },
+    {
+      "id": "price_optimization",
+      "label": "Price Optimization",
+      "description": "Calculate optimal price using ML models"
+    },
+    {
+      "id": "recommendation",
+      "label": "Price Recommendation",
+      "description": "Generate final price recommendation with confidence"
+    }
+  ],
+  "show_metrics": true
+}
+

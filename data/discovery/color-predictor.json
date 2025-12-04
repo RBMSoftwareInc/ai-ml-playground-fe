@@ -1,0 +1,26 @@
+{
+  "metadata": {
+    "id": "color-predictor",
+    "name": "AI Color Predictor",
+    "icon": "🎨",
+    "description": "Predict brand vibe from color combinations",
+    "category": "design"
+  },
+  "interaction": {
+    "type": "dragdrop",
+    "label": "Drag colors or shapes"
+  },
+  "model": {
+    "message": "Analyzing color psychology...",
+    "prompt": "Predict brand vibe and personality from these colors: {colors}"
+  },
+  "visualization": {
+    "type": "palette",
+    "animation": "blend"
+  },
+  "surprise": {
+    "type": "vibe",
+    "message": "Brand Vibe: {vibe}"
+  }
+}
+

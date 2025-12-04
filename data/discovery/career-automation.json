@@ -1,0 +1,27 @@
+{
+  "metadata": {
+    "id": "career-automation",
+    "name": "Career Automation Forecast",
+    "icon": "🤖",
+    "description": "See how AI will impact your job role",
+    "category": "career"
+  },
+  "interaction": {
+    "type": "input",
+    "placeholder": "Enter job title (e.g., Software Engineer)",
+    "label": "Job Title"
+  },
+  "model": {
+    "message": "Analyzing automation potential for your role...",
+    "prompt": "Predict automation percentage and provide career tips for {jobTitle}"
+  },
+  "visualization": {
+    "type": "gauge",
+    "animation": "fill-up"
+  },
+  "surprise": {
+    "type": "percentage",
+    "message": "{percentage}% automatable by AI"
+  }
+}
+

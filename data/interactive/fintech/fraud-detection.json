@@ -1,0 +1,133 @@
+{
+  "metadata": {
+    "id": "fraud-detection",
+    "title": "AI Fraud Detection System",
+    "tagline": "Detect transaction fraud in milliseconds",
+    "icon": "🛡️",
+    "industry": "fintech"
+  },
+  "businessStory": "A fraud ring caused ₹5 Cr losses last month. AI stops fraud instantly by analyzing transaction patterns, device fingerprints, and behavioral anomalies in real-time.",
+  "impact": {
+    "revenue_saved": "₹7.4 Cr / year",
+    "fraud_reduction": "3.2x",
+    "roi": "6 months"
+  },
+  "scenarios": [
+    {
+      "id": "stolen-card",
+      "label": "Stolen Credit Card",
+      "description": "High-value transaction from new location",
+      "recommended": true,
+      "visualization": "transaction_stream",
+      "decisions": [
+        {
+          "id": "block",
+          "label": "Block Transaction",
+          "outcome": "fraud_prevented"
+        },
+        {
+          "id": "verify",
+          "label": "Request Verification",
+          "outcome": "manual_review"
+        },
+        {
+          "id": "allow",
+          "label": "Allow Transaction",
+          "outcome": "risk_accepted"
+        }
+      ]
+    },
+    {
+      "id": "velocity-attack",
+      "label": "Velocity Attack",
+      "description": "Multiple rapid transactions from same device",
+      "recommended": false,
+      "visualization": "velocity_heatmap",
+      "decisions": [
+        {
+          "id": "block",
+          "label": "Block All Transactions",
+          "outcome": "fraud_prevented"
+        },
+        {
+          "id": "rate-limit",
+          "label": "Rate Limit Device",
+          "outcome": "throttled"
+        }
+      ]
+    },
+    {
+      "id": "account-takeover",
+      "label": "Account Takeover",
+      "description": "Suspicious login patterns detected",
+      "recommended": false,
+      "visualization": "login_timeline",
+      "decisions": [
+        {
+          "id": "lock",
+          "label": "Lock Account",
+          "outcome": "account_secured"
+        },
+        {
+          "id": "challenge",
+          "label": "Challenge User",
+          "outcome": "mfa_required"
+        }
+      ]
+    }
+  ],
+  "pipeline": [
+    {
+      "id": "detection",
+      "label": "Transaction Detection",
+      "description": "Real-time transaction monitoring"
+    },
+    {
+      "id": "analysis",
+      "label": "Pattern Analysis",
+      "description": "ML model scoring"
+    },
+    {
+      "id": "scoring",
+      "label": "Risk Scoring",
+      "description": "Calculate fraud probability"
+    },
+    {
+      "id": "action",
+      "label": "Action Decision",
+      "description": "Execute prevention strategy"
+    }
+  ],
+  "impactMetrics": {
+    "fraud_prevented": {
+      "label": "Fraud Prevented",
+      "value": "₹2.3 Cr",
+      "change": "+45%"
+    },
+    "false_positives": {
+      "label": "False Positives",
+      "value": "0.8%",
+      "change": "-60%"
+    },
+    "response_time": {
+      "label": "Response Time",
+      "value": "12ms",
+      "change": "-85%"
+    }
+  },
+  "steps": [
+    {
+      "phase": "simulation",
+      "type": "visualization",
+      "title": "Transaction Stream",
+      "description": "Real-time fraud detection in action"
+    },
+    {
+      "phase": "simulation",
+      "type": "decision",
+      "title": "Make Decision",
+      "description": "Choose how to handle suspicious transaction"
+    }
+  ]
+}
+

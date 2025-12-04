@@ -1,0 +1,89 @@
+{
+  "fileTree": {
+    "src": {
+      "type": "directory",
+      "children": {
+        "api": {
+          "type": "directory",
+          "children": {
+            "routes": {
+              "type": "directory",
+              "children": {
+                "users.ts": { "type": "file", "size": 2048 },
+                "products.ts": { "type": "file", "size": 1536 }
+              }
+            },
+            "controllers": {
+              "type": "directory",
+              "children": {
+                "UserController.ts": { "type": "file", "size": 3072 },
+                "ProductController.ts": { "type": "file", "size": 2560 }
+              }
+            }
+          }
+        },
+        "services": {
+          "type": "directory",
+          "children": {
+            "UserService.ts": { "type": "file", "size": 4096 },
+            "ProductService.ts": { "type": "file", "size": 3584 }
+          }
+        },
+        "models": {
+          "type": "directory",
+          "children": {
+            "User.ts": { "type": "file", "size": 1024 },
+            "Product.ts": { "type": "file", "size": 1536 }
+          }
+        }
+      }
+    },
+    "package.json": { "type": "file", "size": 512 }
+  },
+  "diagram": {
+    "nodes": [
+      { "id": "api", "type": "service", "label": "API Gateway", "x": 400, "y": 100 },
+      { "id": "users", "type": "service", "label": "User Service", "x": 200, "y": 300 },
+      { "id": "products", "type": "service", "label": "Product Service", "x": 600, "y": 300 },
+      { "id": "db", "type": "database", "label": "PostgreSQL", "x": 400, "y": 500 },
+      { "id": "cache", "type": "cache", "label": "Redis", "x": 600, "y": 500 }
+    ],
+    "edges": [
+      { "from": "api", "to": "users", "type": "http" },
+      { "from": "api", "to": "products", "type": "http" },
+      { "from": "users", "to": "db", "type": "query" },
+      { "from": "products", "to": "db", "type": "query" },
+      { "from": "products", "to": "cache", "type": "read" }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "id": "vuln-1",
+      "severity": "high",
+      "title": "SQL Injection Risk",
+      "file": "src/services/UserService.ts",
+      "line": 42,
+      "description": "Direct string concatenation in SQL query",
+      "remediation": "Use parameterized queries or ORM methods"
+    },
+    {
+      "id": "vuln-2",
+      "severity": "medium",
+      "title": "Missing Authentication",
+      "file": "src/api/routes/products.ts",
+      "line": 15,
+      "description": "Public endpoint without authentication middleware",
+      "remediation": "Add authentication middleware to route"
+    },
+    {
+      "id": "vuln-3",
+      "severity": "low",
+      "title": "Hardcoded Secret",
+      "file": "src/api/controllers/UserController.ts",
+      "line": 8,
+      "description": "API key hardcoded in source code",
+      "remediation": "Move to environment variables or secret manager"
+    }
+  ]
+}
+

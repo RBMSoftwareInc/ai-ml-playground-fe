@@ -1,0 +1,50 @@
+{
+  "insights": [
+    {
+      "id": "insight-1",
+      "type": "optimization",
+      "title": "Performance Optimization Opportunity",
+      "description": "Your UserService.ts has a nested loop that could be optimized using a Map lookup, reducing complexity from O(n²) to O(n).",
+      "confidence": 0.92,
+      "action": "View suggestion",
+      "timestamp": "2025-01-15T10:30:00Z"
+    },
+    {
+      "id": "insight-2",
+      "type": "security",
+      "title": "Security Best Practice",
+      "description": "Consider implementing rate limiting on your authentication endpoints to prevent brute force attacks.",
+      "confidence": 0.88,
+      "action": "Apply pattern",
+      "timestamp": "2025-01-15T09:15:00Z"
+    },
+    {
+      "id": "insight-3",
+      "type": "refactor",
+      "title": "Code Smell Detected",
+      "description": "The ProductController has a function with 8 parameters. Consider using a configuration object pattern.",
+      "confidence": 0.85,
+      "action": "Refactor",
+      "timestamp": "2025-01-15T08:45:00Z"
+    },
+    {
+      "id": "insight-4",
+      "type": "test",
+      "title": "Missing Test Coverage",
+      "description": "Your UserService has 65% test coverage. Critical paths in authentication flow are not covered.",
+      "confidence": 0.90,
+      "action": "Generate tests",
+      "timestamp": "2025-01-15T07:20:00Z"
+    },
+    {
+      "id": "insight-5",
+      "type": "dependency",
+      "title": "Dependency Update Available",
+      "description": "Express v4.18.2 has a security patch. Consider updating from v4.17.1.",
+      "confidence": 1.0,
+      "action": "Update",
+      "timestamp": "2025-01-15T06:00:00Z"
+    }
+  ]
+}
+

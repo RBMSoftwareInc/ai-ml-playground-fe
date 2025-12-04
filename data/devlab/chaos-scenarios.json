@@ -1,0 +1,64 @@
+{
+  "scenarios": [
+    {
+      "id": "db-fail",
+      "name": "Database Failure",
+      "description": "Simulates database connection timeout",
+      "impact": {
+        "severity": "high",
+        "affectedServices": ["UserService", "ProductService"],
+        "downtime": "2.5s",
+        "errorRate": "100%",
+        "recoveryTime": "1.2s"
+      },
+      "resilienceScore": 75
+    },
+    {
+      "id": "latency-spike",
+      "name": "Latency Spike",
+      "description": "Simulates 5x increase in response time",
+      "impact": {
+        "severity": "medium",
+        "affectedServices": ["API Gateway", "ProductService"],
+        "downtime": "0s",
+        "errorRate": "15%",
+        "recoveryTime": "0.8s"
+      },
+      "resilienceScore": 85
+    },
+    {
+      "id": "worker-crash",
+      "name": "Worker Process Crash",
+      "description": "Simulates worker process termination",
+      "impact": {
+        "severity": "critical",
+        "affectedServices": ["BackgroundJobs", "EmailService"],
+        "downtime": "5.0s",
+        "errorRate": "100%",
+        "recoveryTime": "3.5s"
+      },
+      "resilienceScore": 60
+    },
+    {
+      "id": "memory-leak",
+      "name": "Memory Leak",
+      "description": "Simulates gradual memory consumption increase",
+      "impact": {
+        "severity": "medium",
+        "affectedServices": ["All services"],
+        "downtime": "0s",
+        "errorRate": "25%",
+        "recoveryTime": "N/A"
+      },
+      "resilienceScore": 70
+    }
+  ],
+  "timeline": [
+    { "time": 0, "status": "healthy", "metrics": { "cpu": 25, "memory": 45, "requests": 100 } },
+    { "time": 1, "status": "degraded", "metrics": { "cpu": 45, "memory": 55, "requests": 85 } },
+    { "time": 2, "status": "critical", "metrics": { "cpu": 85, "memory": 90, "requests": 20 } },
+    { "time": 3, "status": "recovering", "metrics": { "cpu": 60, "memory": 70, "requests": 50 } },
+    { "time": 4, "status": "healthy", "metrics": { "cpu": 30, "memory": 50, "requests": 95 } }
+  ]
+}
+

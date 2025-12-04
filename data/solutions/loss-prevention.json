@@ -1,0 +1,102 @@
+{
+  "id": "loss-prevention",
+  "industry": "retail",
+  "title": "AI Loss Prevention System",
+  "tagline": "Prevent inventory shrinkage and theft in real-time",
+  "icon": "🔒",
+  "impact": {
+    "revenue_saved": "₹9.2 Cr / year",
+    "shrinkage_reduction": "45%",
+    "roi": "5 months"
+  },
+  "business_story": "Inventory shrinkage was costing ₹2 Cr annually. Our AI system monitors store activity, detects suspicious patterns, and alerts staff in real-time—reducing losses by 45%.",
+  "modes": {
+    "business": {
+      "key_benefits": [
+        "Real-time alerts",
+        "Shrinkage reduction",
+        "Staff efficiency"
+      ]
+    },
+    "tech": {
+      "models": [
+        "Computer Vision",
+        "Behavioral Analysis",
+        "Anomaly Detection"
+      ],
+      "trace": true,
+      "tokens": false
+    }
+  },
+  "scenarios": [
+    {
+      "id": "suspicious-behavior",
+      "label": "Suspicious Behavior",
+      "autoPrompt": "Customer loitering near high-value items, avoiding cameras",
+      "fields": [
+        {
+          "name": "time_in_store",
+          "label": "Time in Store (minutes)",
+          "type": "number",
+          "default": 45
+        },
+        {
+          "name": "camera_avoidance",
+          "label": "Camera Avoidance Score",
+          "type": "number",
+          "default": 0.85
+        },
+        {
+          "name": "item_category",
+          "label": "Item Category",
+          "type": "select",
+          "options": ["Electronics", "Jewelry", "Fashion", "Other"],
+          "default": "Electronics"
+        }
+      ]
+    },
+    {
+      "id": "sweethearting",
+      "label": "Sweethearting Detection",
+      "autoPrompt": "Employee scanning items without beeping",
+      "fields": [
+        {
+          "name": "scan_speed",
+          "label": "Scan Speed (items/second)",
+          "type": "number",
+          "default": 0.3
+        },
+        {
+          "name": "beep_ratio",
+          "label": "Beep Ratio",
+          "type": "number",
+          "default": 0.4
+        }
+      ]
+    }
+  ],
+  "pipeline": [
+    {
+      "id": "video_analysis",
+      "label": "Video Analysis",
+      "description": "Analyze video feeds for suspicious patterns"
+    },
+    {
+      "id": "behavior_scoring",
+      "label": "Behavior Scoring",
+      "description": "Score behavior patterns using ML models"
+    },
+    {
+      "id": "risk_assessment",
+      "label": "Risk Assessment",
+      "description": "Assess risk level and generate alerts"
+    },
+    {
+      "id": "alert_generation",
+      "label": "Alert Generation",
+      "description": "Generate real-time alerts for staff"
+    }
+  ],
+  "show_metrics": true
+}
+

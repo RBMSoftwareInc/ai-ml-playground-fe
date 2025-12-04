@@ -1,0 +1,67 @@
+{
+  "projects": [
+    {
+      "id": "microservice-api",
+      "name": "Microservice API",
+      "language": "Node.js",
+      "description": "RESTful API with Express, TypeScript, and MongoDB",
+      "files": [
+        "src/index.ts",
+        "src/routes/users.ts",
+        "src/models/User.ts",
+        "src/middleware/auth.ts",
+        "package.json",
+        "tsconfig.json",
+        "README.md"
+      ],
+      "readme": "# Microservice API\n\nA production-ready Node.js API with authentication and MongoDB integration."
+    },
+    {
+      "id": "python-data-pipeline",
+      "name": "Data Pipeline",
+      "language": "Python",
+      "description": "ETL pipeline with pandas, SQLAlchemy, and async processing",
+      "files": [
+        "main.py",
+        "extract.py",
+        "transform.py",
+        "load.py",
+        "config.py",
+        "requirements.txt",
+        "README.md"
+      ],
+      "readme": "# Data Pipeline\n\nHigh-performance ETL pipeline for processing large datasets."
+    },
+    {
+      "id": "go-api-server",
+      "name": "Go API Server",
+      "language": "Go",
+      "description": "High-performance HTTP server with Gin framework",
+      "files": [
+        "main.go",
+        "handlers/user.go",
+        "models/user.go",
+        "middleware/cors.go",
+        "go.mod",
+        "README.md"
+      ],
+      "readme": "# Go API Server\n\nLightning-fast HTTP server built with Go and Gin."
+    },
+    {
+      "id": "java-spring-app",
+      "name": "Spring Boot App",
+      "language": "Java",
+      "description": "Enterprise Spring Boot application with JPA",
+      "files": [
+        "src/main/java/com/app/Application.java",
+        "src/main/java/com/app/controller/UserController.java",
+        "src/main/java/com/app/service/UserService.java",
+        "src/main/java/com/app/repository/UserRepository.java",
+        "pom.xml",
+        "README.md"
+      ],
+      "readme": "# Spring Boot Application\n\nEnterprise-grade Java application with Spring Boot and JPA."
+    }
+  ]
+}
+

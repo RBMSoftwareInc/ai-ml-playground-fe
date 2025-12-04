@@ -1,0 +1,101 @@
+{
+  "id": "fraud-detection",
+  "industry": "fintech",
+  "title": "AI Fraud Detection System",
+  "tagline": "Detect transaction fraud in milliseconds",
+  "icon": "🛡️",
+  "impact": {
+    "revenue_saved": "₹7.4 Cr / year",
+    "fraud_reduction": "3.2x",
+    "roi": "6 months"
+  },
+  "business_story": "A fraud ring caused ₹5 Cr losses last month. AI stops fraud instantly by analyzing transaction patterns, device fingerprints, and behavioral anomalies in real-time.",
+  "modes": {
+    "business": {
+      "key_benefits": [
+        "Real-time alerts",
+        "Chargeback reduction",
+        "False positive minimization"
+      ]
+    },
+    "tech": {
+      "models": [
+        "Anomaly Detection",
+        "Vector Similarity",
+        "LLM Reasoning"
+      ],
+      "trace": true,
+      "tokens": true
+    }
+  },
+  "scenarios": [
+    {
+      "id": "stolen-card",
+      "label": "Stolen Credit Card",
+      "autoPrompt": "Amount ₹89,999 — sudden location change",
+      "fields": [
+        {
+          "name": "amount",
+          "label": "Transaction Amount",
+          "type": "number",
+          "default": 89999
+        },
+        {
+          "name": "location",
+          "label": "Transaction Location",
+          "type": "text",
+          "default": "Mumbai"
+        },
+        {
+          "name": "previous_location",
+          "label": "Previous Transaction Location",
+          "type": "text",
+          "default": "Delhi"
+        }
+      ]
+    },
+    {
+      "id": "bot-attack",
+      "label": "Bot Attack",
+      "autoPrompt": "1000 micro-transactions per minute",
+      "fields": [
+        {
+          "name": "transaction_count",
+          "label": "Transactions per Minute",
+          "type": "number",
+          "default": 1000
+        },
+        {
+          "name": "amount_range",
+          "label": "Amount Range",
+          "type": "text",
+          "default": "₹10-₹50"
+        }
+      ]
+    }
+  ],
+  "pipeline": [
+    {
+      "id": "feature_extract",
+      "label": "Feature Extraction",
+      "description": "Extract transaction features, device signals, and behavioral patterns"
+    },
+    {
+      "id": "vector_search",
+      "label": "Vector Search",
+      "description": "Search similar fraud patterns in historical data"
+    },
+    {
+      "id": "anomaly_score",
+      "label": "Anomaly Scoring",
+      "description": "Calculate anomaly score using ML models"
+    },
+    {
+      "id": "final_classification",
+      "label": "Final Classification",
+      "description": "Classify as fraud or legitimate with confidence score"
+    }
+  ],
+  "show_metrics": true
+}
+

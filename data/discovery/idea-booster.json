@@ -1,0 +1,27 @@
+{
+  "metadata": {
+    "id": "idea-booster",
+    "name": "Idea Booster",
+    "icon": "💡",
+    "description": "Generate startup ideas from your problem statement",
+    "category": "innovation"
+  },
+  "interaction": {
+    "type": "textarea",
+    "placeholder": "Describe a problem you want to solve...",
+    "label": "Problem Statement"
+  },
+  "model": {
+    "message": "Generating innovative startup ideas...",
+    "prompt": "Generate 3 startup ideas based on this problem: {problem}"
+  },
+  "visualization": {
+    "type": "ideas-list",
+    "animation": "slide-up"
+  },
+  "surprise": {
+    "type": "ideas",
+    "message": "3 Startup Ideas Generated!"
+  }
+}
+

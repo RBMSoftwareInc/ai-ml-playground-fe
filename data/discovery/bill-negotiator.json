@@ -1,0 +1,27 @@
+{
+  "metadata": {
+    "id": "bill-negotiator",
+    "name": "Bill Negotiator",
+    "icon": "💸",
+    "description": "Get AI-powered negotiation scripts for your bills",
+    "category": "finance"
+  },
+  "interaction": {
+    "type": "input",
+    "placeholder": "Enter bill amount (e.g., ₹50,000)",
+    "label": "Bill Amount"
+  },
+  "model": {
+    "message": "Based on your bill amount, here's your personalized negotiation strategy:",
+    "prompt": "Generate a negotiation script for a bill of {amount}"
+  },
+  "visualization": {
+    "type": "script",
+    "animation": "fade-in"
+  },
+  "surprise": {
+    "type": "savings",
+    "message": "Potential savings: {savings}%"
+  }
+}
+

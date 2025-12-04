@@ -1,0 +1,27 @@
+{
+  "metadata": {
+    "id": "website-speed",
+    "name": "Website Speed Predictor",
+    "icon": "⚡",
+    "description": "Analyze website performance and get improvement tips",
+    "category": "tech"
+  },
+  "interaction": {
+    "type": "input",
+    "placeholder": "Enter website URL",
+    "label": "Website URL"
+  },
+  "model": {
+    "message": "Analyzing your website speed...",
+    "prompt": "Analyze website speed for {url} and provide improvement suggestions"
+  },
+  "visualization": {
+    "type": "speed-badge",
+    "animation": "pulse"
+  },
+  "surprise": {
+    "type": "score",
+    "message": "Speed Score: {score}/100"
+  }
+}
+

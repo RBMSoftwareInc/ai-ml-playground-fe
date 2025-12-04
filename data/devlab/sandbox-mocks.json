@@ -1,0 +1,52 @@
+{
+  "python": {
+    "exitCode": 0,
+    "stdout": "Hello, World!\nProcessing data...\n✓ Completed successfully\n",
+    "stderr": "",
+    "runtime": "0.234s",
+    "memory": "12.5 MB"
+  },
+  "node": {
+    "exitCode": 0,
+    "stdout": "Server running on http://localhost:3000\n✓ Database connected\n✓ Routes initialized\n",
+    "stderr": "",
+    "runtime": "1.456s",
+    "memory": "45.2 MB"
+  },
+  "java": {
+    "exitCode": 0,
+    "stdout": "Application started successfully\nSpring context initialized\nServer ready on port 8080\n",
+    "stderr": "",
+    "runtime": "2.123s",
+    "memory": "128.7 MB"
+  },
+  "go": {
+    "exitCode": 0,
+    "stdout": "Starting server...\nListening on :8080\n✓ Ready to accept connections\n",
+    "stderr": "",
+    "runtime": "0.089s",
+    "memory": "8.3 MB"
+  },
+  "sql": {
+    "exitCode": 0,
+    "stdout": "Query executed successfully\nRows affected: 42\nExecution time: 0.012s\n",
+    "stderr": "",
+    "runtime": "0.012s",
+    "memory": "2.1 MB"
+  },
+  "bash": {
+    "exitCode": 0,
+    "stdout": "Processing files...\n✓ 15 files processed\n✓ Backup completed\n",
+    "stderr": "",
+    "runtime": "0.567s",
+    "memory": "4.2 MB"
+  },
+  "error": {
+    "exitCode": 1,
+    "stdout": "",
+    "stderr": "Error: Cannot find module 'express'\n    at Function.Module._resolveFilename\n    at Function.Module._load\n",
+    "runtime": "0.045s",
+    "memory": "8.1 MB"
+  }
+}
+
